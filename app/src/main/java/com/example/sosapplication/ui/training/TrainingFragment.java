@@ -60,37 +60,32 @@ public class TrainingFragment extends Fragment {
 
         steps.add(new TrainingStep(
                 R.drawable.step1_check,
-                "Krok 1 – Skontroluj vedomie a dýchanie",
-                "Skontroluj, či osoba reaguje. Jemne zatras ramenom a nahlas sa opýtaj: „Si v poriadku?“ " +
-                        "Sleduj, či dýcha – pohyb hrudníka, zvuky dýchania."
+                getString(R.string.training_step_1_title),
+                getString(R.string.training_step_1_desc)
         ));
 
         steps.add(new TrainingStep(
                 R.drawable.step2_call,
-                "Krok 2 – Zavolaj núdzové číslo",
-                "Ak osoba nereaguje a nedýcha, okamžite zavolaj na číslo 112. " +
-                        "Ak je niekto nablízku, požiadaj ho o pomoc."
+                getString(R.string.training_step_2_title),
+                getString(R.string.training_step_2_desc)
         ));
 
         steps.add(new TrainingStep(
                 R.drawable.step3_compression,
-                "Krok 3 – Stláčaj hrudník",
-                "Polož dlane na stred hrudníka. Stláčaj silno a rýchlo " +
-                        "(100–120 stlačení za minútu) do hĺbky 5–6 cm."
+                getString(R.string.training_step_3_title),
+                getString(R.string.training_step_3_desc)
         ));
 
         steps.add(new TrainingStep(
                 R.drawable.step4_breath,
-                "Krok 4 – Záchranné vdychy (ak si vyškolený)",
-                "Po 30 stlačeniach daj 2 vdychy. Zakloň hlavu, zdvihni bradu " +
-                        "a sleduj, či sa hrudník dvíha."
+                getString(R.string.training_step_4_title),
+                getString(R.string.training_step_4_desc)
         ));
 
         steps.add(new TrainingStep(
                 R.drawable.step5_continue,
-                "Krok 5 – Pokračuj až do príchodu pomoci",
-                "Pokračuj v cykle 30 stlačení a 2 vdychov, kým nepríde záchranka " +
-                        "alebo osoba nezačne dýchať."
+                getString(R.string.training_step_5_title),
+                getString(R.string.training_step_5_desc)
         ));
 
         TrainingPagerAdapter adapter = new TrainingPagerAdapter(steps);

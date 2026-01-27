@@ -7,5 +7,35 @@
 
     <string name="training">Тренування</string>
     <string name="sos">SOS</string>
-    <string name="select_language">Мова</string>
+
+    <!-- TRAINING STEPS -->
+    <string name="training_step_1_title">Крок 1 – Перевір свідомість і дихання</string>
+    <string name="training_step_1_desc">
+Перевір, чи людина реагує. Обережно струси за плечі та голосно запитай: «Ви в порядку?»
+Слідкуй за диханням – рух грудної клітки, звуки дихання.
+    </string>
+
+    <string name="training_step_2_title">Крок 2 – Виклич екстрені служби</string>
+    <string name="training_step_2_desc">
+Якщо людина не реагує і не дихає, негайно зателефонуй 112.
+Якщо хтось поруч — попроси допомоги.
+    </string>
+
+    <string name="training_step_3_title">Крок 3 – Натискання на грудну клітку</string>
+    <string name="training_step_3_desc">
+Поклади долоні в центр грудної клітки. Натискай сильно та швидко
+(100–120 натискань за хвилину) на глибину 5–6 см.
+    </string>
+
+    <string name="training_step_4_title">Крок 4 – Рятувальні вдихи</string>
+    <string name="training_step_4_desc">
+Після 30 натискань зроби 2 рятувальні вдихи (якщо навчений).
+Відхили голову назад, підніми підборіддя та слідкуй за підняттям грудей.
+    </string>
+
+    <string name="training_step_5_title">Крок 5 – Продовжуй до прибуття допомоги</string>
+    <string name="training_step_5_desc">
+Продовжуй цикли 30 натискань і 2 вдихів, доки не прибуде швидка допомога
+або людина не почне дихати.
+    </string>
 </resources>

@@ -7,4 +7,35 @@
 
     <string name="training">Training</string>
     <string name="sos">SOS</string>
+
+    <!-- TRAINING STEPS -->
+    <string name="training_step_1_title">Step 1 – Check consciousness and breathing</string>
+    <string name="training_step_1_desc">
+Check if the person responds. Gently shake the shoulders and ask loudly: “Are you okay?”
+Look for breathing – chest movement, breathing sounds.
+    </string>
+
+    <string name="training_step_2_title">Step 2 – Call emergency number</string>
+    <string name="training_step_2_desc">
+If the person does not respond and is not breathing, call 112 immediately.
+If someone is nearby, ask them for help.
+    </string>
+
+    <string name="training_step_3_title">Step 3 – Chest compressions</string>
+    <string name="training_step_3_desc">
+Place your hands in the center of the chest. Press hard and fast
+(100–120 compressions per minute) to a depth of 5–6 cm.
+    </string>
+
+    <string name="training_step_4_title">Step 4 – Rescue breaths</string>
+    <string name="training_step_4_desc">
+After 30 compressions give 2 rescue breaths if trained.
+Tilt the head back, lift the chin and watch the chest rise.
+    </string>
+
+    <string name="training_step_5_title">Step 5 – Continue until help arrives</string>
+    <string name="training_step_5_desc">
+Continue cycles of 30 compressions and 2 breaths until emergency services arrive
+or the person starts breathing.
+    </string>
 </resources>

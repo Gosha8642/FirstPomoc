@@ -1,6 +1,5 @@
 package com.example.sosapplication.ui.home;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +12,18 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.sosapplication.R;
 import com.example.sosapplication.databinding.FragmentHomeBinding;
-
-import java.util.Locale;
+import com.example.sosapplication.utils.LocaleHelper;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState
+    ) {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -40,27 +40,16 @@ public class HomeFragment extends Fragment {
                         .navigate(R.id.navigation_training)
         );
 
-        // ✅ Language buttons
-        binding.btnEN.setOnClickListener(v -> setLocale("en"));
-        binding.btnSK.setOnClickListener(v -> setLocale("sk"));
-        binding.btnUA.setOnClickListener(v -> setLocale("uk"));
+        // ✅ Language
+        binding.btnEN.setOnClickListener(v -> changeLang("en"));
+        binding.btnSK.setOnClickListener(v -> changeLang("sk"));
+        binding.btnUA.setOnClickListener(v -> changeLang("uk"));
 
         return root;
     }
 
-    private void setLocale(String lang) {
-        Locale locale = new Locale(lang);
-        Locale.setDefault(locale);
-
-        Configuration config = new Configuration();
-        config.setLocale(locale);
-
-        requireActivity().getResources().updateConfiguration(
-                config,
-                requireActivity().getResources().getDisplayMetrics()
-        );
-
-        // 🔄 перерисовываем экран
+    private void changeLang(String lang) {
+        LocaleHelper.setLocale(requireContext(), lang);
         requireActivity().recreate();
     }
 
