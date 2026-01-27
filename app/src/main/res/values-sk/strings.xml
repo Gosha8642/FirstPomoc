@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SOS Aplikácia</string>
+
+    <string name="title_home">Domov</string>
+    <string name="title_dashboard">Mapa</string>
+    <string name="title_notifications">Profil</string>
+
+    <string name="training">Tréning</string>
+    <string name="sos">SOS</string>
+    <string name="select_language">Jazyk</string>
+</resources>

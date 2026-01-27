@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">SOS Додаток</string>
+
+    <string name="title_home">Головна</string>
+    <string name="title_dashboard">Мапа</string>
+    <string name="title_notifications">Профіль</string>
+
+    <string name="training">Тренування</string>
+    <string name="sos">SOS</string>
+    <string name="select_language">Мова</string>
+</resources>

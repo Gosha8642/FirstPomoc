@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">SOS Application</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Map</string>
+    <string name="title_notifications">Profile</string>
+
+    <string name="training">Training</string>
+    <string name="sos">SOS</string>
+</resources>
