@@ -15,8 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sosapplication.R;
 import com.example.sosapplication.databinding.FragmentDashboardBinding;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -61,11 +59,9 @@ public class DashboardFragment extends Fragment {
     private final double west = 16.8332;
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater,
-            ViewGroup container,
-            Bundle savedInstanceState
-    ) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
 
         new ViewModelProvider(this).get(DashboardViewModel.class);
 
@@ -112,6 +108,8 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        binding.aedInfoPanel.setVisibility(View.GONE);
+
         return root;
     }
 
@@ -131,7 +129,6 @@ public class DashboardFragment extends Fragment {
         );
 
         myLocationOverlay.enableMyLocation();
-        myLocationOverlay.enableFollowLocation();
 
         myLocationOverlay.runOnFirstFix(() -> {
             Location loc = myLocationOverlay.getLastFix();
@@ -162,10 +159,19 @@ public class DashboardFragment extends Fragment {
                 double lon = coords.getDouble(0);
                 double lat = coords.getDouble(1);
 
+                JSONObject props = feature.getJSONObject("properties");
+
+                String location = props.optString("defibrillator:location", "AED");
+                String access = props.optString("access", "No access info");
+                String hours = props.optString("opening_hours", "No hours info");
+
                 Marker marker = new Marker(mapView);
                 marker.setPosition(new GeoPoint(lat, lon));
                 marker.setIcon(requireContext().getDrawable(R.drawable.ic_aed));
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+
+                marker.setTitle(location);
+                marker.setSnippet("Access: " + access + "\nHours: " + hours);
 
                 marker.setOnMarkerClickListener((m, map) -> {
                     if (userLocationPoint != null) {
@@ -173,6 +179,10 @@ public class DashboardFragment extends Fragment {
 
                         buildRoute(userLocationPoint, aed);
                         zoomToUserAndAed(userLocationPoint, aed);
+
+                        binding.aedInfoPanel.setVisibility(View.VISIBLE);
+                        binding.txtAedTitle.setText(m.getTitle());
+                        binding.txtAedInfo.setText(m.getSnippet());
                     }
                     return true;
                 });
@@ -249,23 +259,22 @@ public class DashboardFragment extends Fragment {
 
     private void zoomToUserAndAed(GeoPoint user, GeoPoint aed) {
 
-        double north = Math.max(user.getLatitude(), aed.getLatitude());
-        double south = Math.min(user.getLatitude(), aed.getLatitude());
-        double east = Math.max(user.getLongitude(), aed.getLongitude());
-        double west = Math.min(user.getLongitude(), aed.getLongitude());
+        double n = Math.max(user.getLatitude(), aed.getLatitude());
+        double s = Math.min(user.getLatitude(), aed.getLatitude());
+        double e = Math.max(user.getLongitude(), aed.getLongitude());
+        double w = Math.min(user.getLongitude(), aed.getLongitude());
 
-        // 👉 добавляем запас
-        double latPadding = (north - south) * 0.35;
-        double lonPadding = (east - west) * 0.35;
+        double latPadding = (n - s) * 0.4;
+        double lonPadding = (e - w) * 0.4;
 
         BoundingBox box = new BoundingBox(
-                north + latPadding,
-                east + lonPadding,
-                south - latPadding,
-                west - lonPadding
+                n + latPadding,
+                e + lonPadding,
+                s - latPadding,
+                w - lonPadding
         );
 
-        mapView.post(() -> mapView.zoomToBoundingBox(box, true, 250));
+        mapView.post(() -> mapView.zoomToBoundingBox(box, true, 300));
     }
 
     // ---------------- MASK ----------------
