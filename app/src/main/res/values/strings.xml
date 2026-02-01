@@ -44,4 +44,5 @@ or the person starts breathing.
     <string name="aed_unknown">No information</string>
     <string name="aed_access">Access</string>
     <string name="aed_hours">Hours</string>
+    <string name="aed_location">Location</string>
 </resources>

@@ -68,9 +68,6 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        binding.btnMyLocation.bringToFront();
-        binding.btnMyLocation.setZ(100f);
-
         Configuration.getInstance().setUserAgentValue(requireContext().getPackageName());
 
         mapView = binding.mapView;
@@ -85,17 +82,15 @@ public class DashboardFragment extends Fragment {
         mapView.zoomToBoundingBox(slovakiaBox, true);
 
         mapView.addMapListener(new MapListener() {
-            @Override
-            public boolean onScroll(ScrollEvent event) {
-                return true;
-            }
-
-            @Override
-            public boolean onZoom(ZoomEvent event) {
+            @Override public boolean onScroll(ScrollEvent event) { return true; }
+            @Override public boolean onZoom(ZoomEvent event) {
                 updateAedByZoom();
                 return true;
             }
         });
+
+        binding.btnMyLocation.bringToFront();
+        binding.btnMyLocation.setZ(100f);
 
         initMyLocation();
         loadAedMarkers();
@@ -119,7 +114,10 @@ public class DashboardFragment extends Fragment {
         if (ActivityCompat.checkSelfPermission(requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST);
+            requestPermissions(
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_REQUEST
+            );
             return;
         }
 
@@ -133,7 +131,10 @@ public class DashboardFragment extends Fragment {
         myLocationOverlay.runOnFirstFix(() -> {
             Location loc = myLocationOverlay.getLastFix();
             if (loc != null) {
-                userLocationPoint = new GeoPoint(loc.getLatitude(), loc.getLongitude());
+                userLocationPoint = new GeoPoint(
+                        loc.getLatitude(),
+                        loc.getLongitude()
+                );
             }
         });
 
@@ -144,8 +145,11 @@ public class DashboardFragment extends Fragment {
 
     private void loadAedMarkers() {
         try {
-
             String lang = getCurrentLang();
+            if (!lang.equals("en") && !lang.equals("sk") && !lang.equals("uk")) {
+                lang = "en";
+            }
+
             String fileName = "SK_" + lang + ".geojson";
 
             InputStream is = requireContext().getAssets().open(fileName);
@@ -153,41 +157,57 @@ public class DashboardFragment extends Fragment {
             is.read(buffer);
             is.close();
 
-            JSONObject jsonObject = new JSONObject(new String(buffer, StandardCharsets.UTF_8));
-            JSONArray features = jsonObject.getJSONArray("features");
+            JSONObject json = new JSONObject(
+                    new String(buffer, StandardCharsets.UTF_8)
+            );
+
+            JSONArray features = json.getJSONArray("features");
+            aedMarkers.clear();
 
             for (int i = 0; i < features.length(); i++) {
 
                 JSONObject feature = features.getJSONObject(i);
-                JSONArray coords = feature.getJSONObject("geometry").getJSONArray("coordinates");
+                JSONArray coords = feature
+                        .getJSONObject("geometry")
+                        .getJSONArray("coordinates");
 
                 double lon = coords.getDouble(0);
                 double lat = coords.getDouble(1);
 
                 JSONObject props = feature.getJSONObject("properties");
 
-                String location = props.optString("defibrillator:location", "AED");
-                String access = props.optString("access", "-");
-                String hours = props.optString("opening_hours", "-");
+                String location =
+                        props.optString("defibrillator:location", "AED");
+                String access =
+                        props.optString("access", "-");
+                String hours =
+                        props.optString("opening_hours", "-");
 
                 Marker marker = new Marker(mapView);
                 marker.setPosition(new GeoPoint(lat, lon));
                 marker.setIcon(requireContext().getDrawable(R.drawable.ic_aed));
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
 
+                // ✅ ВЕРХНЯЯ НАДПИСЬ (из geojson)
                 marker.setTitle(location);
-                marker.setSnippet("Access: " + access + "\nHours: " + hours);
 
                 marker.setOnMarkerClickListener((m, map) -> {
+
                     if (userLocationPoint != null) {
 
                         GeoPoint aed = m.getPosition();
+
                         buildRoute(userLocationPoint, aed);
                         zoomToUserAndAed(userLocationPoint, aed);
 
                         binding.aedInfoPanel.setVisibility(View.VISIBLE);
-                        binding.txtAedTitle.setText(m.getTitle());
-                        binding.txtAedInfo.setText(m.getSnippet());
+
+                        // ✅ Тот же текст — в панель
+                        binding.txtAedTitle.setText(location);
+                        binding.txtAedInfo.setText(
+                                getString(R.string.aed_access) + ": " + access + "\n" +
+                                        getString(R.string.aed_hours) + ": " + hours
+                        );
                     }
                     return true;
                 });
@@ -197,6 +217,7 @@ public class DashboardFragment extends Fragment {
             }
 
             updateAedByZoom();
+            mapView.invalidate();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -226,7 +247,8 @@ public class DashboardFragment extends Fragment {
                                 + ";" + end.getLongitude() + "," + end.getLatitude()
                                 + "?overview=full&geometries=geojson";
 
-                HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+                HttpURLConnection conn =
+                        (HttpURLConnection) new URL(url).openConnection();
 
                 Scanner sc = new Scanner(conn.getInputStream()).useDelimiter("\\A");
                 String json = sc.hasNext() ? sc.next() : "";
@@ -269,16 +291,7 @@ public class DashboardFragment extends Fragment {
         double e = Math.max(user.getLongitude(), aed.getLongitude());
         double w = Math.min(user.getLongitude(), aed.getLongitude());
 
-        double latPadding = (n - s) * 0.4;
-        double lonPadding = (e - w) * 0.4;
-
-        BoundingBox box = new BoundingBox(
-                n + latPadding,
-                e + lonPadding,
-                s - latPadding,
-                w - lonPadding
-        );
-
+        BoundingBox box = new BoundingBox(n, e, s, w);
         mapView.post(() -> mapView.zoomToBoundingBox(box, true, 300));
     }
 
@@ -304,10 +317,7 @@ public class DashboardFragment extends Fragment {
         hole.add(new GeoPoint(south, west));
         hole.add(new GeoPoint(north, west));
 
-        List<List<GeoPoint>> holes = new ArrayList<>();
-        holes.add(hole);
-        mask.setHoles(holes);
-
+        mask.setHoles(List.of(hole));
         mapView.getOverlays().add(mask);
     }
 
@@ -320,23 +330,7 @@ public class DashboardFragment extends Fragment {
                 .getLanguage();
     }
 
-    // ---------------- LIFECYCLE ----------------
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mapView != null) mapView.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mapView != null) mapView.onPause();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
+    @Override public void onResume() { super.onResume(); if (mapView != null) mapView.onResume(); }
+    @Override public void onPause() { super.onPause(); if (mapView != null) mapView.onPause(); }
+    @Override public void onDestroyView() { super.onDestroyView(); binding = null; }
 }

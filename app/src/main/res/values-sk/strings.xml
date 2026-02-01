@@ -44,5 +44,6 @@ alebo osoba nezačne dýchať.
     <string name="aed_unknown">Žiadne informácie</string>
     <string name="aed_access">Prístup</string>
     <string name="aed_hours">Hodiny</string>
+    <string name="aed_location">Umiestnenie</string>
 
 </resources>

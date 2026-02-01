@@ -44,5 +44,6 @@
     <string name="aed_unknown">Немає інформації</string>
     <string name="aed_access">Доступ</string>
     <string name="aed_hours">Години</string>
+    <string name="aed_location">Місце розташування</string>
 
 </resources>
