@@ -38,4 +38,10 @@ Tilt the head back, lift the chin and watch the chest rise.
 Continue cycles of 30 compressions and 2 breaths until emergency services arrive
 or the person starts breathing.
     </string>
+
+    <string name="aed_title">Defibrillator (AED)</string>
+    <string name="aed_distance">Distance</string>
+    <string name="aed_unknown">No information</string>
+    <string name="aed_access">Access</string>
+    <string name="aed_hours">Hours</string>
 </resources>

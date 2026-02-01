@@ -144,7 +144,11 @@ public class DashboardFragment extends Fragment {
 
     private void loadAedMarkers() {
         try {
-            InputStream is = requireContext().getAssets().open("SK.geojson");
+
+            String lang = getCurrentLang();
+            String fileName = "SK_" + lang + ".geojson";
+
+            InputStream is = requireContext().getAssets().open(fileName);
             byte[] buffer = new byte[is.available()];
             is.read(buffer);
             is.close();
@@ -153,6 +157,7 @@ public class DashboardFragment extends Fragment {
             JSONArray features = jsonObject.getJSONArray("features");
 
             for (int i = 0; i < features.length(); i++) {
+
                 JSONObject feature = features.getJSONObject(i);
                 JSONArray coords = feature.getJSONObject("geometry").getJSONArray("coordinates");
 
@@ -162,8 +167,8 @@ public class DashboardFragment extends Fragment {
                 JSONObject props = feature.getJSONObject("properties");
 
                 String location = props.optString("defibrillator:location", "AED");
-                String access = props.optString("access", "No access info");
-                String hours = props.optString("opening_hours", "No hours info");
+                String access = props.optString("access", "-");
+                String hours = props.optString("opening_hours", "-");
 
                 Marker marker = new Marker(mapView);
                 marker.setPosition(new GeoPoint(lat, lon));
@@ -175,8 +180,8 @@ public class DashboardFragment extends Fragment {
 
                 marker.setOnMarkerClickListener((m, map) -> {
                     if (userLocationPoint != null) {
-                        GeoPoint aed = m.getPosition();
 
+                        GeoPoint aed = m.getPosition();
                         buildRoute(userLocationPoint, aed);
                         zoomToUserAndAed(userLocationPoint, aed);
 
@@ -304,6 +309,15 @@ public class DashboardFragment extends Fragment {
         mask.setHoles(holes);
 
         mapView.getOverlays().add(mask);
+    }
+
+    private String getCurrentLang() {
+        return requireContext()
+                .getResources()
+                .getConfiguration()
+                .getLocales()
+                .get(0)
+                .getLanguage();
     }
 
     // ---------------- LIFECYCLE ----------------

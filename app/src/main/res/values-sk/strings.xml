@@ -38,4 +38,11 @@ a sleduj, či sa hrudník dvíha.
 Pokračuj v cykle 30 stlačení a 2 vdychov, kým nepríde záchranka
 alebo osoba nezačne dýchať.
     </string>
+
+    <string name="aed_title">Defibrilátor (AED)</string>
+    <string name="aed_distance">Vzdialenosť</string>
+    <string name="aed_unknown">Žiadne informácie</string>
+    <string name="aed_access">Prístup</string>
+    <string name="aed_hours">Hodiny</string>
+
 </resources>

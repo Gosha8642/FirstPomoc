@@ -38,4 +38,11 @@
 Продовжуй цикли 30 натискань і 2 вдихів, доки не прибуде швидка допомога
 або людина не почне дихати.
     </string>
+
+    <string name="aed_title">Дефібрилятор (AED)</string>
+    <string name="aed_distance">Відстань</string>
+    <string name="aed_unknown">Немає інформації</string>
+    <string name="aed_access">Доступ</string>
+    <string name="aed_hours">Години</string>
+
 </resources>
