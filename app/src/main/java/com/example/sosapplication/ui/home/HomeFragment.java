@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,28 +44,35 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupAnimations() {
-        // Pulse animation for SOS button - BIGGER radius animation
-        View pulseRing = binding.pulseRing;
+        // Pulse animation for SOS button - smooth circular expansion
+        ImageView pulseRing = binding.pulseRing;
         
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(pulseRing, "scaleX", 1f, 1.3f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(pulseRing, "scaleY", 1f, 1.3f);
-        ObjectAnimator alpha = ObjectAnimator.ofFloat(pulseRing, "alpha", 0.4f, 0f);
+        // Start from same size as button, expand outward
+        pulseRing.setScaleX(1f);
+        pulseRing.setScaleY(1f);
+        pulseRing.setAlpha(0.5f);
+        
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(pulseRing, "scaleX", 1f, 1.6f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(pulseRing, "scaleY", 1f, 1.6f);
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(pulseRing, "alpha", 0.5f, 0f);
         
         pulseAnimator = new AnimatorSet();
         pulseAnimator.playTogether(scaleX, scaleY, alpha);
-        pulseAnimator.setDuration(1800);
+        pulseAnimator.setDuration(1500);
         pulseAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         pulseAnimator.addListener(new android.animation.AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(android.animation.Animator animation) {
+                // Reset to initial state
                 pulseRing.setScaleX(1f);
                 pulseRing.setScaleY(1f);
-                pulseRing.setAlpha(0.4f);
-                if (pulseAnimator != null) {
+                pulseRing.setAlpha(0.5f);
+                if (pulseAnimator != null && isAdded()) {
                     pulseAnimator.start();
                 }
             }
         });
+        pulseAnimator.setStartDelay(300);
         pulseAnimator.start();
 
         // Entrance animation for SOS button
