@@ -6,22 +6,41 @@
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/trainingViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/pageIndicator" />
-
-    <!-- Page Indicator -->
-    <LinearLayout
-        android:id="@+id/pageIndicator"
+    <!-- Title -->
+    <TextView
+        android:id="@+id/titleTraining"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:text="@string/training_select_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="?attr/colorOnBackground"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/subtitleTraining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/training_select_subtitle"
+        android:textSize="14sp"
+        android:textColor="@color/text_secondary_light"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/titleTraining"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Training List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/trainingList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="16dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/subtitleTraining"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
