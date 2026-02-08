@@ -30,9 +30,15 @@ Android application for finding AED (Automated External Defibrillators) in Slova
    - Landscape orientation
    - Step-by-step illustrations
 
-## What's Been Implemented (2024-02-08)
+## What's Been Implemented
 
-### UI/UX Redesign
+### Latest Changes (December 2025)
+- [x] Changed map route color from green to blue (#007AFF)
+- [x] Lowered SOS cancellation banner (marginTop: 48dp → 100dp)
+- [x] Fixed .gitignore with proper API key security setup
+- [x] Created local.properties template for future API keys
+
+### UI/UX Redesign (2024-02-08)
 - [x] New color palette: Emergency Red (#FF3B30), Safety Green (#34C759), Accent Blue (#007AFF)
 - [x] Light/Dark theme support with toggle button
 - [x] Pulse animation for SOS button
@@ -91,8 +97,9 @@ Android application for finding AED (Automated External Defibrillators) in Slova
 - [ ] AED data update mechanism
 
 ### P1 (Important)
+- [ ] Push notifications via OneSignal (paused by user, App ID saved: 0d2df905-4641-48e5-b9df-c684735e89f1)
+- [ ] FAB animation improvement (recurring issue - needs programmatic listener)
 - [ ] Offline map support
-- [ ] Push notifications for nearby AED
 - [ ] Distance calculation to AED
 
 ### P2 (Nice to have)
@@ -100,6 +107,9 @@ Android application for finding AED (Automated External Defibrillators) in Slova
 - [ ] AED reporting/updating
 - [ ] Favorites/bookmarks
 - [ ] Training completion tracking
+
+## Known Issues
+- **FAB Animation**: The location button animation when AED panel appears has been inconsistent. Consider implementing BottomSheetCallback with programmatic translationY updates.
 
 ## User Personas
 1. **Tourist** - Needs quick access to AED in unfamiliar area
