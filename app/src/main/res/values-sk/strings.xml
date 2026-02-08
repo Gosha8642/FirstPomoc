@@ -1,43 +1,36 @@
 <resources>
     <string name="app_name">SOS Aplikácia</string>
+    <string name="app_name_display">AED Slovensko</string>
+    <string name="app_subtitle">Nájdi najbližší defibrilátor</string>
 
     <string name="title_home">Domov</string>
     <string name="title_dashboard">Mapa</string>
     <string name="title_notifications">Profil</string>
 
     <string name="training">Tréning</string>
+    <string name="training_button">Školenie prvej pomoci</string>
     <string name="sos">SOS</string>
+    <string name="sos_hint">Ťukni pre núdzovú pomoc</string>
+    
+    <string name="theme_toggle">Prepnúť tému</string>
+    <string name="navigate_to_aed">Navigovať k AED</string>
+    <string name="swipe_hint">Posuň pre pokračovanie</string>
 
     <!-- TRAINING STEPS -->
-    <string name="training_step_1_title">Krok 1 – Skontroluj vedomie a dýchanie</string>
-    <string name="training_step_1_desc">
-Skontroluj, či osoba reaguje. Jemne zatras ramenom a nahlas sa opýtaj: „Si v poriadku?“
-Sleduj, či dýcha – pohyb hrudníka, zvuky dýchania.
-    </string>
+    <string name="training_step_1_title">Skontroluj vedomie</string>
+    <string name="training_step_1_desc">Skontroluj, či osoba reaguje. Jemne zatras ramenom a nahlas sa opýtaj: „Si v poriadku?" Sleduj, či dýcha – pohyb hrudníka, zvuky dýchania.</string>
 
-    <string name="training_step_2_title">Krok 2 – Zavolaj núdzové číslo</string>
-    <string name="training_step_2_desc">
-Ak osoba nereaguje a nedýcha, okamžite zavolaj na číslo 112.
-Ak je niekto nablízku, požiadaj ho o pomoc.
-    </string>
+    <string name="training_step_2_title">Zavolaj záchranku</string>
+    <string name="training_step_2_desc">Ak osoba nereaguje a nedýcha, okamžite zavolaj na číslo 112. Ak je niekto nablízku, požiadaj ho o pomoc.</string>
 
-    <string name="training_step_3_title">Krok 3 – Stláčaj hrudník</string>
-    <string name="training_step_3_desc">
-Polož dlane na stred hrudníka. Stláčaj silno a rýchlo
-(100–120 stlačení za minútu) do hĺbky 5–6 cm.
-    </string>
+    <string name="training_step_3_title">Stláčaj hrudník</string>
+    <string name="training_step_3_desc">Polož dlane na stred hrudníka. Stláčaj silno a rýchlo (100–120 stlačení za minútu) do hĺbky 5–6 cm.</string>
 
-    <string name="training_step_4_title">Krok 4 – Záchranné vdychy</string>
-    <string name="training_step_4_desc">
-Po 30 stlačeniach daj 2 vdychy. Zakloň hlavu, zdvihni bradu
-a sleduj, či sa hrudník dvíha.
-    </string>
+    <string name="training_step_4_title">Záchranné vdychy</string>
+    <string name="training_step_4_desc">Po 30 stlačeniach daj 2 vdychy. Zakloň hlavu, zdvihni bradu a sleduj, či sa hrudník dvíha.</string>
 
-    <string name="training_step_5_title">Krok 5 – Pokračuj až do príchodu pomoci</string>
-    <string name="training_step_5_desc">
-Pokračuj v cykle 30 stlačení a 2 vdychov, kým nepríde záchranka
-alebo osoba nezačne dýchať.
-    </string>
+    <string name="training_step_5_title">Pokračuj v resuscitácii</string>
+    <string name="training_step_5_desc">Pokračuj v cykle 30 stlačení a 2 vdychov, kým nepríde záchranka alebo osoba nezačne dýchať.</string>
 
     <string name="aed_title">Defibrilátor (AED)</string>
     <string name="aed_distance">Vzdialenosť</string>
