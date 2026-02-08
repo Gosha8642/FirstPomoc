@@ -1,9 +1,12 @@
 package com.example.sosapplication.ui.home;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,10 +16,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.sosapplication.R;
 import com.example.sosapplication.databinding.FragmentHomeBinding;
 import com.example.sosapplication.utils.LocaleHelper;
+import com.example.sosapplication.utils.ThemeHelper;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private AnimatorSet pulseAnimator;
 
     @Override
     public View onCreateView(
@@ -24,28 +29,130 @@ public class HomeFragment extends Fragment {
             ViewGroup container,
             Bundle savedInstanceState
     ) {
-
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // ✅ SOS
+        setupAnimations();
+        setupClickListeners();
+        updateThemeIcon();
+        updateLanguageSelection();
+
+        return root;
+    }
+
+    private void setupAnimations() {
+        // Pulse animation for SOS button
+        View pulseRing = binding.pulseRing;
+        
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(pulseRing, "scaleX", 1f, 1.15f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(pulseRing, "scaleY", 1f, 1.15f);
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(pulseRing, "alpha", 0.3f, 0f);
+        
+        pulseAnimator = new AnimatorSet();
+        pulseAnimator.playTogether(scaleX, scaleY, alpha);
+        pulseAnimator.setDuration(1500);
+        pulseAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        pulseAnimator.addListener(new android.animation.AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(android.animation.Animator animation) {
+                pulseRing.setScaleX(1f);
+                pulseRing.setScaleY(1f);
+                pulseRing.setAlpha(0.3f);
+                if (pulseAnimator != null) {
+                    pulseAnimator.start();
+                }
+            }
+        });
+        pulseAnimator.start();
+
+        // Entrance animation for SOS button
+        binding.btnSOS.setScaleX(0.8f);
+        binding.btnSOS.setScaleY(0.8f);
+        binding.btnSOS.setAlpha(0f);
+        binding.btnSOS.animate()
+                .scaleX(1f)
+                .scaleY(1f)
+                .alpha(1f)
+                .setDuration(400)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .start();
+
+        // Entrance animation for Training button
+        binding.btnTraining.setTranslationY(100f);
+        binding.btnTraining.setAlpha(0f);
+        binding.btnTraining.animate()
+                .translationY(0f)
+                .alpha(1f)
+                .setDuration(400)
+                .setStartDelay(200)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .start();
+    }
+
+    private void setupClickListeners() {
+        // SOS Button
         binding.btnSOS.setOnClickListener(v -> {
+            animateButtonPress(v);
             NavController navController = NavHostFragment.findNavController(this);
             navController.navigate(R.id.navigation_dashboard);
         });
 
-        // ✅ Training
-        binding.btnTraining.setOnClickListener(v ->
-                NavHostFragment.findNavController(this)
-                        .navigate(R.id.navigation_training)
-        );
+        // Training Button
+        binding.btnTraining.setOnClickListener(v -> {
+            animateButtonPress(v);
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.navigation_training);
+        });
 
-        // ✅ Language
+        // Theme Toggle
+        binding.btnTheme.setOnClickListener(v -> {
+            animateButtonPress(v);
+            ThemeHelper.toggleTheme(requireContext());
+        });
+
+        // Language Buttons
         binding.btnEN.setOnClickListener(v -> changeLang("en"));
         binding.btnSK.setOnClickListener(v -> changeLang("sk"));
         binding.btnUA.setOnClickListener(v -> changeLang("uk"));
+    }
 
-        return root;
+    private void animateButtonPress(View view) {
+        view.animate()
+                .scaleX(0.95f)
+                .scaleY(0.95f)
+                .setDuration(100)
+                .withEndAction(() -> view.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(100)
+                        .start())
+                .start();
+    }
+
+    private void updateThemeIcon() {
+        boolean isDark = ThemeHelper.isDarkMode(requireContext());
+        binding.btnTheme.setImageResource(
+                isDark ? R.drawable.ic_theme_light : R.drawable.ic_theme_dark
+        );
+    }
+
+    private void updateLanguageSelection() {
+        String currentLang = LocaleHelper.getLanguage(requireContext());
+        
+        binding.btnEN.setSelected("en".equals(currentLang));
+        binding.btnSK.setSelected("sk".equals(currentLang));
+        binding.btnUA.setSelected("uk".equals(currentLang));
+        
+        // Update text colors based on selection
+        int selectedColor = getResources().getColor(R.color.white, null);
+        int normalColor = getResources().getColor(
+                com.google.android.material.R.attr.colorOnSurface, 
+                requireContext().getTheme()
+        );
+        
+        binding.btnEN.setTextColor("en".equals(currentLang) ? selectedColor : normalColor);
+        binding.btnSK.setTextColor("sk".equals(currentLang) ? selectedColor : normalColor);
+        binding.btnUA.setTextColor("uk".equals(currentLang) ? selectedColor : normalColor);
     }
 
     private void changeLang(String lang) {
@@ -56,6 +163,10 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (pulseAnimator != null) {
+            pulseAnimator.cancel();
+            pulseAnimator = null;
+        }
         binding = null;
     }
 }
