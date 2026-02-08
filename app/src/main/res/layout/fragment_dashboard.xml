@@ -11,6 +11,48 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!-- SOS Active Banner -->
+    <LinearLayout
+        android:id="@+id/sosBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@color/primary"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="12dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_sos"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/sosBannerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/sos_active"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelSos"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/cancel"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/primary"
+            app:cornerRadius="18dp" />
+
+    </LinearLayout>
+
     <!-- My Location FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnMyLocation"
@@ -41,7 +83,7 @@
         android:clickable="true"
         android:focusable="true">
 
-        <!-- Handle Bar (Swipe indicator) -->
+        <!-- Handle Bar -->
         <View
             android:layout_width="40dp"
             android:layout_height="5dp"
@@ -56,7 +98,6 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- AED Badge -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,7 +151,6 @@
             app:cornerRadius="12dp"
             app:backgroundTint="@color/secondary" />
         
-        <!-- Swipe down hint -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
