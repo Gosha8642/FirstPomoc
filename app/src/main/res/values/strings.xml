@@ -1,43 +1,36 @@
 <resources>
     <string name="app_name">SOS Application</string>
+    <string name="app_name_display">AED Slovakia</string>
+    <string name="app_subtitle">Find the nearest defibrillator</string>
 
     <string name="title_home">Home</string>
     <string name="title_dashboard">Map</string>
     <string name="title_notifications">Profile</string>
 
     <string name="training">Training</string>
+    <string name="training_button">First Aid Training</string>
     <string name="sos">SOS</string>
+    <string name="sos_hint">Tap for emergency assistance</string>
+    
+    <string name="theme_toggle">Toggle theme</string>
+    <string name="navigate_to_aed">Navigate to AED</string>
+    <string name="swipe_hint">Swipe to continue</string>
 
     <!-- TRAINING STEPS -->
-    <string name="training_step_1_title">Step 1 – Check consciousness and breathing</string>
-    <string name="training_step_1_desc">
-Check if the person responds. Gently shake the shoulders and ask loudly: “Are you okay?”
-Look for breathing – chest movement, breathing sounds.
-    </string>
+    <string name="training_step_1_title">Check Consciousness</string>
+    <string name="training_step_1_desc">Check if the person responds. Gently shake the shoulders and ask loudly: \"Are you okay?\" Look for breathing – chest movement, breathing sounds.</string>
 
-    <string name="training_step_2_title">Step 2 – Call emergency number</string>
-    <string name="training_step_2_desc">
-If the person does not respond and is not breathing, call 112 immediately.
-If someone is nearby, ask them for help.
-    </string>
+    <string name="training_step_2_title">Call Emergency</string>
+    <string name="training_step_2_desc">If the person does not respond and is not breathing, call 112 immediately. If someone is nearby, ask them for help.</string>
 
-    <string name="training_step_3_title">Step 3 – Chest compressions</string>
-    <string name="training_step_3_desc">
-Place your hands in the center of the chest. Press hard and fast
-(100–120 compressions per minute) to a depth of 5–6 cm.
-    </string>
+    <string name="training_step_3_title">Chest Compressions</string>
+    <string name="training_step_3_desc">Place your hands in the center of the chest. Press hard and fast (100–120 compressions per minute) to a depth of 5–6 cm.</string>
 
-    <string name="training_step_4_title">Step 4 – Rescue breaths</string>
-    <string name="training_step_4_desc">
-After 30 compressions give 2 rescue breaths if trained.
-Tilt the head back, lift the chin and watch the chest rise.
-    </string>
+    <string name="training_step_4_title">Rescue Breaths</string>
+    <string name="training_step_4_desc">After 30 compressions give 2 rescue breaths if trained. Tilt the head back, lift the chin and watch the chest rise.</string>
 
-    <string name="training_step_5_title">Step 5 – Continue until help arrives</string>
-    <string name="training_step_5_desc">
-Continue cycles of 30 compressions and 2 breaths until emergency services arrive
-or the person starts breathing.
-    </string>
+    <string name="training_step_5_title">Continue CPR</string>
+    <string name="training_step_5_desc">Continue cycles of 30 compressions and 2 breaths until emergency services arrive or the person starts breathing.</string>
 
     <string name="aed_title">Defibrillator (AED)</string>
     <string name="aed_distance">Distance</string>
