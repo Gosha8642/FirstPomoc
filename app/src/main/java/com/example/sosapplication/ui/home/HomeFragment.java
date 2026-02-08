@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -139,20 +141,19 @@ public class HomeFragment extends Fragment {
     private void updateLanguageSelection() {
         String currentLang = LocaleHelper.getLanguage(requireContext());
         
-        binding.btnEN.setSelected("en".equals(currentLang));
-        binding.btnSK.setSelected("sk".equals(currentLang));
-        binding.btnUA.setSelected("uk".equals(currentLang));
-        
-        // Update text colors based on selection
-        int selectedColor = getResources().getColor(R.color.white, null);
-        int normalColor = getResources().getColor(
-                com.google.android.material.R.attr.colorOnSurface, 
-                requireContext().getTheme()
-        );
-        
-        binding.btnEN.setTextColor("en".equals(currentLang) ? selectedColor : normalColor);
-        binding.btnSK.setTextColor("sk".equals(currentLang) ? selectedColor : normalColor);
-        binding.btnUA.setTextColor("uk".equals(currentLang) ? selectedColor : normalColor);
+        // Reset all buttons
+        updateLangButton(binding.btnEN, "en".equals(currentLang));
+        updateLangButton(binding.btnSK, "sk".equals(currentLang));
+        updateLangButton(binding.btnUA, "uk".equals(currentLang));
+    }
+    
+    private void updateLangButton(TextView button, boolean isSelected) {
+        button.setSelected(isSelected);
+        if (isSelected) {
+            button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+        } else {
+            button.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary_light));
+        }
     }
 
     private void changeLang(String lang) {
