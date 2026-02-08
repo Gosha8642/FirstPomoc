@@ -17,10 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
+        android:layout_marginTop="48dp"
         android:background="@color/primary"
         android:orientation="horizontal"
         android:gravity="center"
-        android:padding="12dp"
+        android:padding="16dp"
+        android:elevation="8dp"
         android:visibility="gone">
 
         <ImageView
