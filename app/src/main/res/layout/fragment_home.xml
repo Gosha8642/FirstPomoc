@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="?android:attr/colorBackground">
 
-    <!-- Top Bar with Theme Toggle and Language - moved lower -->
+    <!-- Top Bar with Theme Toggle and Language -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
@@ -114,42 +114,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- SOS Button Container -->
-    <FrameLayout
-        android:id="@+id/sosContainer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
+    <!-- SOS Button - Simple without pulse animation -->
+    <Button
+        android:id="@+id/btnSOS"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:text="SOS"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:background="@drawable/bg_sos_button"
+        android:elevation="12dp"
+        android:stateListAnimator="@null"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- Pulse Ring - using ImageView with oval background -->
-        <ImageView
-            android:id="@+id/pulseRing"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:background="@drawable/bg_pulse_ring"
-            android:alpha="0.4" />
-
-        <!-- SOS Button -->
-        <Button
-            android:id="@+id/btnSOS"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:text="SOS"
-            android:textSize="48sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:background="@drawable/bg_sos_button"
-            android:elevation="12dp"
-            android:stateListAnimator="@null" />
-
-    </FrameLayout>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Training Button -->
     <com.google.android.material.button.MaterialButton
@@ -181,8 +161,8 @@
         android:text="@string/sos_hint"
         android:textSize="12sp"
         android:textColor="@color/text_secondary_light"
-        android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/sosContainer"
+        android:layout_marginTop="130dp"
+        app:layout_constraintTop_toTopOf="@id/btnSOS"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -2,6 +2,7 @@ package com.example.sosapplication.ui.dashboard;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -66,6 +68,7 @@ public class DashboardFragment extends Fragment {
     private final double west = 16.8332;
     
     private boolean isPanelVisible = false;
+    private int panelHeight = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -101,8 +104,8 @@ public class DashboardFragment extends Fragment {
         binding.btnMyLocation.bringToFront();
         binding.btnMyLocation.setZ(100f);
 
-        // First add the dark overlay for non-Slovakia areas
-        highlightSlovakia();
+        // Add dark overlay for areas outside Slovakia
+        addSlovakiaMask();
         
         initMyLocation();
         loadAedMarkers();
@@ -143,6 +146,59 @@ public class DashboardFragment extends Fragment {
         return root;
     }
     
+    private void addSlovakiaMask() {
+        // Create 4 dark rectangles around Slovakia to darken other countries
+        int darkColor = 0x99000000; // Semi-transparent black
+        
+        // Top rectangle (above Slovakia)
+        Polygon topMask = new Polygon();
+        topMask.setFillColor(darkColor);
+        topMask.setStrokeWidth(0f);
+        topMask.setPoints(Arrays.asList(
+            new GeoPoint(90, -180),
+            new GeoPoint(90, 180),
+            new GeoPoint(north + 0.5, 180),
+            new GeoPoint(north + 0.5, -180)
+        ));
+        mapView.getOverlays().add(topMask);
+        
+        // Bottom rectangle (below Slovakia)
+        Polygon bottomMask = new Polygon();
+        bottomMask.setFillColor(darkColor);
+        bottomMask.setStrokeWidth(0f);
+        bottomMask.setPoints(Arrays.asList(
+            new GeoPoint(south - 0.5, -180),
+            new GeoPoint(south - 0.5, 180),
+            new GeoPoint(-90, 180),
+            new GeoPoint(-90, -180)
+        ));
+        mapView.getOverlays().add(bottomMask);
+        
+        // Left rectangle (west of Slovakia)
+        Polygon leftMask = new Polygon();
+        leftMask.setFillColor(darkColor);
+        leftMask.setStrokeWidth(0f);
+        leftMask.setPoints(Arrays.asList(
+            new GeoPoint(north + 0.5, -180),
+            new GeoPoint(north + 0.5, west - 0.5),
+            new GeoPoint(south - 0.5, west - 0.5),
+            new GeoPoint(south - 0.5, -180)
+        ));
+        mapView.getOverlays().add(leftMask);
+        
+        // Right rectangle (east of Slovakia)
+        Polygon rightMask = new Polygon();
+        rightMask.setFillColor(darkColor);
+        rightMask.setStrokeWidth(0f);
+        rightMask.setPoints(Arrays.asList(
+            new GeoPoint(north + 0.5, east + 0.5),
+            new GeoPoint(north + 0.5, 180),
+            new GeoPoint(south - 0.5, 180),
+            new GeoPoint(south - 0.5, east + 0.5)
+        ));
+        mapView.getOverlays().add(rightMask);
+    }
+    
     private void setupPanelSwipeToDismiss() {
         binding.aedInfoPanel.setOnTouchListener(new View.OnTouchListener() {
             private float startY;
@@ -158,7 +214,7 @@ public class DashboardFragment extends Fragment {
                         
                     case MotionEvent.ACTION_MOVE:
                         float deltaY = event.getRawY() - startY;
-                        if (deltaY > 0) { // Only allow swiping down
+                        if (deltaY > 0) {
                             v.setTranslationY(startTranslationY + deltaY);
                         }
                         return true;
@@ -166,10 +222,9 @@ public class DashboardFragment extends Fragment {
                     case MotionEvent.ACTION_UP:
                     case MotionEvent.ACTION_CANCEL:
                         float finalDeltaY = event.getRawY() - startY;
-                        if (finalDeltaY > 80) { // Threshold to dismiss
+                        if (finalDeltaY > 80) {
                             hideAedPanel();
                         } else {
-                            // Snap back
                             v.animate()
                                     .translationY(0f)
                                     .setDuration(200)
@@ -194,8 +249,6 @@ public class DashboardFragment extends Fragment {
                         .start())
                 .start();
     }
-
-    // ---------------- LOCATION ----------------
 
     private void initMyLocation() {
         if (ActivityCompat.checkSelfPermission(requireContext(),
@@ -227,8 +280,6 @@ public class DashboardFragment extends Fragment {
 
         mapView.getOverlays().add(myLocationOverlay);
     }
-
-    // ---------------- AED ----------------
 
     private void loadAedMarkers() {
         try {
@@ -263,12 +314,9 @@ public class DashboardFragment extends Fragment {
 
                 JSONObject props = feature.getJSONObject("properties");
 
-                String location =
-                        props.optString("defibrillator:location", "AED");
-                String access =
-                        props.optString("access", "-");
-                String hours =
-                        props.optString("opening_hours", "-");
+                String location = props.optString("defibrillator:location", "AED");
+                String access = props.optString("access", "-");
+                String hours = props.optString("opening_hours", "-");
 
                 Marker marker = new Marker(mapView);
                 marker.setPosition(new GeoPoint(lat, lon));
@@ -276,16 +324,14 @@ public class DashboardFragment extends Fragment {
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                 marker.setTitle(location);
 
+                final String loc = location;
+                final String acc = access;
+                final String hrs = hours;
+                
                 marker.setOnMarkerClickListener((m, map) -> {
-                    // Store selected AED position (don't build route yet)
                     selectedAedPoint = m.getPosition();
-                    
-                    // Show panel with animation
-                    showAedPanel(location, access, hours);
-                    
-                    // Center on AED
+                    showAedPanel(loc, acc, hrs);
                     mapView.getController().animateTo(selectedAedPoint);
-                    
                     return true;
                 });
 
@@ -310,12 +356,8 @@ public class DashboardFragment extends Fragment {
                         getString(R.string.aed_hours) + ": " + hours
         );
 
-        // Measure panel height for FAB animation
-        binding.aedInfoPanel.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        int panelHeight = binding.aedInfoPanel.getMeasuredHeight();
-
         // Slide up animation for panel
-        binding.aedInfoPanel.setTranslationY(panelHeight);
+        binding.aedInfoPanel.setTranslationY(300f);
         binding.aedInfoPanel.setAlpha(0f);
         binding.aedInfoPanel.animate()
                 .translationY(0f)
@@ -324,16 +366,19 @@ public class DashboardFragment extends Fragment {
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
         
-        // Move FAB up - panel pushes it
-        moveFabUp(panelHeight);
+        // Move FAB up slightly (not too much)
+        binding.btnMyLocation.animate()
+                .translationY(-100f)
+                .setDuration(300)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .start();
     }
     
     private void hideAedPanel() {
         isPanelVisible = false;
         
-        // Slide down animation
         binding.aedInfoPanel.animate()
-                .translationY(400f)
+                .translationY(300f)
                 .alpha(0f)
                 .setDuration(250)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
@@ -344,35 +389,19 @@ public class DashboardFragment extends Fragment {
                 .start();
         
         // Move FAB back down
-        moveFabDown();
-        
-        // Clear selected AED
-        selectedAedPoint = null;
-        
-        // Remove route if exists
-        if (currentRoute != null) {
-            mapView.getOverlays().remove(currentRoute);
-            currentRoute = null;
-            mapView.invalidate();
-        }
-    }
-    
-    private void moveFabUp(int panelHeight) {
-        // Animate FAB to move up by panel height + some margin
-        binding.btnMyLocation.animate()
-                .translationY(-(panelHeight + 20))
-                .setDuration(300)
-                .setInterpolator(new AccelerateDecelerateInterpolator())
-                .start();
-    }
-    
-    private void moveFabDown() {
-        // Animate FAB back to original position
         binding.btnMyLocation.animate()
                 .translationY(0f)
                 .setDuration(300)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
+        
+        selectedAedPoint = null;
+        
+        if (currentRoute != null) {
+            mapView.getOverlays().remove(currentRoute);
+            currentRoute = null;
+            mapView.invalidate();
+        }
     }
 
     private void updateAedByZoom() {
@@ -382,10 +411,7 @@ public class DashboardFragment extends Fragment {
         }
     }
 
-    // ---------------- ROUTE ----------------
-
     private void buildRoute(GeoPoint start, GeoPoint end) {
-
         if (currentRoute != null) {
             mapView.getOverlays().remove(currentRoute);
         }
@@ -420,7 +446,7 @@ public class DashboardFragment extends Fragment {
                 requireActivity().runOnUiThread(() -> {
                     currentRoute = new Polyline();
                     currentRoute.setPoints(points);
-                    currentRoute.setColor(ROUTE_COLOR);  // GREEN color
+                    currentRoute.setColor(ROUTE_COLOR);  // GREEN
                     currentRoute.setWidth(10f);
 
                     mapView.getOverlays().add(currentRoute);
@@ -433,10 +459,7 @@ public class DashboardFragment extends Fragment {
         }).start();
     }
 
-    // ---------------- CAMERA ----------------
-
     private void zoomToUserAndAed(GeoPoint user, GeoPoint aed) {
-
         double n = Math.max(user.getLatitude(), aed.getLatitude());
         double s = Math.min(user.getLatitude(), aed.getLatitude());
         double e = Math.max(user.getLongitude(), aed.getLongitude());
@@ -444,63 +467,6 @@ public class DashboardFragment extends Fragment {
 
         BoundingBox box = new BoundingBox(n, e, s, w);
         mapView.post(() -> mapView.zoomToBoundingBox(box, true, 300));
-    }
-
-    // ---------------- SLOVAKIA HIGHLIGHT ----------------
-
-    private void highlightSlovakia() {
-        // Create a dark overlay covering the entire world
-        // with a hole cut out for Slovakia
-        Polygon mask = new Polygon();
-        mask.setFillColor(0xBB000000);  // Dark semi-transparent overlay (more opaque)
-        mask.setStrokeWidth(0f);
-
-        // World bounds (outer polygon)
-        List<GeoPoint> outer = new ArrayList<>();
-        outer.add(new GeoPoint(85, -180));
-        outer.add(new GeoPoint(85, 180));
-        outer.add(new GeoPoint(-85, 180));
-        outer.add(new GeoPoint(-85, -180));
-        outer.add(new GeoPoint(85, -180));
-        mask.setPoints(outer);
-
-        // Slovakia hole (approximate border) - more detailed shape
-        List<GeoPoint> slovakiaHole = new ArrayList<>();
-        // Simplified Slovakia border points
-        slovakiaHole.add(new GeoPoint(49.60, 17.15));  // Northwest
-        slovakiaHole.add(new GeoPoint(49.55, 18.00));
-        slovakiaHole.add(new GeoPoint(49.50, 18.85));
-        slovakiaHole.add(new GeoPoint(49.45, 19.50));
-        slovakiaHole.add(new GeoPoint(49.40, 20.10));
-        slovakiaHole.add(new GeoPoint(49.30, 20.60));
-        slovakiaHole.add(new GeoPoint(49.10, 21.20));
-        slovakiaHole.add(new GeoPoint(49.00, 21.80));
-        slovakiaHole.add(new GeoPoint(48.90, 22.15));
-        slovakiaHole.add(new GeoPoint(48.80, 22.50));  // East
-        slovakiaHole.add(new GeoPoint(48.60, 22.20));
-        slovakiaHole.add(new GeoPoint(48.40, 21.80));
-        slovakiaHole.add(new GeoPoint(48.20, 21.30));
-        slovakiaHole.add(new GeoPoint(48.00, 20.80));
-        slovakiaHole.add(new GeoPoint(47.90, 20.30));
-        slovakiaHole.add(new GeoPoint(47.80, 19.80));
-        slovakiaHole.add(new GeoPoint(47.75, 19.20));
-        slovakiaHole.add(new GeoPoint(47.75, 18.70));
-        slovakiaHole.add(new GeoPoint(47.80, 18.20));
-        slovakiaHole.add(new GeoPoint(47.85, 17.70));  // South
-        slovakiaHole.add(new GeoPoint(47.95, 17.20));
-        slovakiaHole.add(new GeoPoint(48.10, 16.95));  // Southwest
-        slovakiaHole.add(new GeoPoint(48.40, 16.85));
-        slovakiaHole.add(new GeoPoint(48.70, 16.90));
-        slovakiaHole.add(new GeoPoint(48.90, 17.00));
-        slovakiaHole.add(new GeoPoint(49.10, 17.05));
-        slovakiaHole.add(new GeoPoint(49.30, 17.08));
-        slovakiaHole.add(new GeoPoint(49.50, 17.10));
-        slovakiaHole.add(new GeoPoint(49.60, 17.15));  // Close the loop
-
-        mask.setHoles(List.of(slovakiaHole));
-        
-        // Add mask as first overlay (behind everything else)
-        mapView.getOverlays().add(0, mask);
     }
 
     private String getCurrentLang() {

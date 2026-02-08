@@ -1,13 +1,10 @@
 package com.example.sosapplication.ui.home;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +21,6 @@ import com.example.sosapplication.utils.ThemeHelper;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private AnimatorSet pulseAnimator;
 
     @Override
     public View onCreateView(
@@ -44,37 +40,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupAnimations() {
-        // Pulse animation for SOS button - smooth circular expansion
-        ImageView pulseRing = binding.pulseRing;
-        
-        // Start from same size as button, expand outward
-        pulseRing.setScaleX(1f);
-        pulseRing.setScaleY(1f);
-        pulseRing.setAlpha(0.5f);
-        
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(pulseRing, "scaleX", 1f, 1.6f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(pulseRing, "scaleY", 1f, 1.6f);
-        ObjectAnimator alpha = ObjectAnimator.ofFloat(pulseRing, "alpha", 0.5f, 0f);
-        
-        pulseAnimator = new AnimatorSet();
-        pulseAnimator.playTogether(scaleX, scaleY, alpha);
-        pulseAnimator.setDuration(1500);
-        pulseAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        pulseAnimator.addListener(new android.animation.AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(android.animation.Animator animation) {
-                // Reset to initial state
-                pulseRing.setScaleX(1f);
-                pulseRing.setScaleY(1f);
-                pulseRing.setAlpha(0.5f);
-                if (pulseAnimator != null && isAdded()) {
-                    pulseAnimator.start();
-                }
-            }
-        });
-        pulseAnimator.setStartDelay(300);
-        pulseAnimator.start();
-
         // Entrance animation for SOS button
         binding.btnSOS.setScaleX(0.8f);
         binding.btnSOS.setScaleY(0.8f);
@@ -150,7 +115,6 @@ public class HomeFragment extends Fragment {
         String currentLang = LocaleHelper.getLanguage(requireContext());
         boolean isDark = ThemeHelper.isDarkMode(requireContext());
         
-        // Reset all buttons with correct theme colors
         updateLangButton(binding.btnEN, "en".equals(currentLang), isDark);
         updateLangButton(binding.btnSK, "sk".equals(currentLang), isDark);
         updateLangButton(binding.btnUA, "uk".equals(currentLang), isDark);
@@ -159,10 +123,8 @@ public class HomeFragment extends Fragment {
     private void updateLangButton(TextView button, boolean isSelected, boolean isDarkTheme) {
         button.setSelected(isSelected);
         if (isSelected) {
-            // Selected button always white text (on primary color background)
             button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
         } else {
-            // Unselected: black text on light theme, white text on dark theme
             if (isDarkTheme) {
                 button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
             } else {
@@ -179,10 +141,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (pulseAnimator != null) {
-            pulseAnimator.cancel();
-            pulseAnimator = null;
-        }
         binding = null;
     }
 }
