@@ -16,9 +16,29 @@
     <string name="navigate_to_aed">Navigate to AED</string>
     <string name="swipe_hint">Swipe to continue</string>
 
-    <!-- TRAINING STEPS -->
+    <!-- Training Selection -->
+    <string name="training_select_title">First Aid Training</string>
+    <string name="training_select_subtitle">Select a topic to learn</string>
+
+    <!-- Training Categories -->
+    <string name="training_cpr_title">CPR - No Breathing</string>
+    <string name="training_cpr_desc">What to do when a person is not breathing</string>
+    
+    <string name="training_choking_title">Choking</string>
+    <string name="training_choking_desc">Help someone who is choking on food or object</string>
+    
+    <string name="training_bleeding_title">Severe Bleeding</string>
+    <string name="training_bleeding_desc">How to stop heavy bleeding from wounds</string>
+    
+    <string name="training_burns_title">Burns</string>
+    <string name="training_burns_desc">First aid for thermal and chemical burns</string>
+    
+    <string name="training_fracture_title">Fractures</string>
+    <string name="training_fracture_desc">How to immobilize broken bones</string>
+
+    <!-- CPR STEPS (No Breathing) -->
     <string name="training_step_1_title">Check Consciousness</string>
-    <string name="training_step_1_desc">Check if the person responds. Gently shake the shoulders and ask loudly: "Are you okay?" Look for breathing – chest movement, breathing sounds.</string>
+    <string name="training_step_1_desc">Check if the person responds. Gently shake the shoulders and ask loudly: \"Are you okay?\" Look for breathing – chest movement, breathing sounds.</string>
 
     <string name="training_step_2_title">Call Emergency</string>
     <string name="training_step_2_desc">If the person does not respond and is not breathing, call 112 immediately. If someone is nearby, ask them for help.</string>
@@ -32,6 +52,47 @@
     <string name="training_step_5_title">Continue CPR</string>
     <string name="training_step_5_desc">Continue cycles of 30 compressions and 2 breaths until emergency services arrive or the person starts breathing.</string>
 
+    <!-- CHOKING STEPS -->
+    <string name="choking_step_1_title">Assess the Situation</string>
+    <string name="choking_step_1_desc">Ask: \"Are you choking?\" If they cannot speak, cough or breathe, they need immediate help. Call 112 if severe.</string>
+    
+    <string name="choking_step_2_title">Back Blows</string>
+    <string name="choking_step_2_desc">Stand behind the person. Give 5 sharp blows between the shoulder blades with the heel of your hand.</string>
+    
+    <string name="choking_step_3_title">Abdominal Thrusts</string>
+    <string name="choking_step_3_desc">If back blows don\'t work, perform 5 abdominal thrusts (Heimlich maneuver). Stand behind, place fist above navel, pull sharply inward and upward.</string>
+
+    <!-- BLEEDING STEPS -->
+    <string name="bleeding_step_1_title">Apply Pressure</string>
+    <string name="bleeding_step_1_desc">Press firmly on the wound with a clean cloth or bandage. Maintain constant pressure for at least 10 minutes.</string>
+    
+    <string name="bleeding_step_2_title">Elevate the Limb</string>
+    <string name="bleeding_step_2_desc">If possible, raise the injured limb above heart level while maintaining pressure. This helps reduce blood flow to the wound.</string>
+    
+    <string name="bleeding_step_3_title">Bandage Securely</string>
+    <string name="bleeding_step_3_desc">Once bleeding slows, apply a firm bandage over the wound. Do not remove the first layer if blood soaks through – add more layers.</string>
+
+    <!-- BURNS STEPS -->
+    <string name="burns_step_1_title">Cool the Burn</string>
+    <string name="burns_step_1_desc">Hold the burned area under cool (not cold) running water for at least 10–20 minutes. Do not use ice or very cold water.</string>
+    
+    <string name="burns_step_2_title">Remove Constrictions</string>
+    <string name="burns_step_2_desc">Carefully remove any jewelry, watches, or tight clothing near the burn before swelling starts. Do not remove clothing stuck to the burn.</string>
+    
+    <string name="burns_step_3_title">Cover and Protect</string>
+    <string name="burns_step_3_desc">Cover the burn with a sterile, non-fluffy bandage or cling film. Do not apply butter, toothpaste, or other home remedies.</string>
+
+    <!-- FRACTURE STEPS -->
+    <string name="fracture_step_1_title">Keep Still</string>
+    <string name="fracture_step_1_desc">Do not move the injured limb. Immobilize it in the position found. Movement can cause more damage and pain.</string>
+    
+    <string name="fracture_step_2_title">Support the Injury</string>
+    <string name="fracture_step_2_desc">Use padding (clothing, blankets) to support and cushion the injured area. Create a splint using rigid materials if trained.</string>
+    
+    <string name="fracture_step_3_title">Apply Ice and Wait</string>
+    <string name="fracture_step_3_desc">Apply ice wrapped in cloth to reduce swelling. Call emergency services. Do not give food or water in case surgery is needed.</string>
+
+    <!-- AED Info -->
     <string name="aed_title">Defibrillator (AED)</string>
     <string name="aed_distance">Distance</string>
     <string name="aed_unknown">No information</string>
