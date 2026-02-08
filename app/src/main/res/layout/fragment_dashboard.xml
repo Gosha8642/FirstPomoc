@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -25,19 +25,17 @@
         app:elevation="6dp"
         app:fabSize="normal" />
 
-    <!-- AED Info Bottom Sheet -->
+    <!-- AED Info Panel -->
     <LinearLayout
         android:id="@+id/aedInfoPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:orientation="vertical"
         android:background="@drawable/bg_bottom_sheet"
         android:padding="20dp"
         android:elevation="16dp"
-        android:visibility="gone"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        app:behavior_peekHeight="0dp"
-        app:behavior_hideable="true">
+        android:visibility="gone">
 
         <!-- Handle Bar -->
         <View
@@ -110,4 +108,4 @@
 
     </LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>
