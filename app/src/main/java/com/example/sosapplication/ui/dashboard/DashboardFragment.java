@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -72,7 +73,7 @@ public class DashboardFragment extends Fragment {
 
         mapView = binding.mapView;
         mapView.setTileSource(TileSourceFactory.MAPNIK);
-        mapView.setBuiltInZoomControls(true);
+        mapView.setBuiltInZoomControls(false);
         mapView.setMultiTouchControls(true);
 
         BoundingBox slovakiaBox = new BoundingBox(north, east, south, west);
@@ -96,7 +97,19 @@ public class DashboardFragment extends Fragment {
         loadAedMarkers();
         highlightSlovakia();
 
+        // FAB animation
+        binding.btnMyLocation.setScaleX(0f);
+        binding.btnMyLocation.setScaleY(0f);
+        binding.btnMyLocation.animate()
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(300)
+                .setStartDelay(200)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .start();
+
         binding.btnMyLocation.setOnClickListener(v -> {
+            animateButtonPress(v);
             if (userLocationPoint != null) {
                 mapView.getController().animateTo(userLocationPoint);
                 mapView.getController().setZoom(17.0);
@@ -106,6 +119,19 @@ public class DashboardFragment extends Fragment {
         binding.aedInfoPanel.setVisibility(View.GONE);
 
         return root;
+    }
+
+    private void animateButtonPress(View view) {
+        view.animate()
+                .scaleX(0.9f)
+                .scaleY(0.9f)
+                .setDuration(100)
+                .withEndAction(() -> view.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(100)
+                        .start())
+                .start();
     }
 
     // ---------------- LOCATION ----------------
@@ -187,27 +213,17 @@ public class DashboardFragment extends Fragment {
                 marker.setPosition(new GeoPoint(lat, lon));
                 marker.setIcon(requireContext().getDrawable(R.drawable.ic_aed));
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-
-                // ✅ ВЕРХНЯЯ НАДПИСЬ (из geojson)
                 marker.setTitle(location);
 
                 marker.setOnMarkerClickListener((m, map) -> {
-
                     if (userLocationPoint != null) {
-
                         GeoPoint aed = m.getPosition();
 
                         buildRoute(userLocationPoint, aed);
                         zoomToUserAndAed(userLocationPoint, aed);
 
-                        binding.aedInfoPanel.setVisibility(View.VISIBLE);
-
-                        // ✅ Тот же текст — в панель
-                        binding.txtAedTitle.setText(location);
-                        binding.txtAedInfo.setText(
-                                getString(R.string.aed_access) + ": " + access + "\n" +
-                                        getString(R.string.aed_hours) + ": " + hours
-                        );
+                        // Show panel with animation
+                        showAedPanel(location, access, hours);
                     }
                     return true;
                 });
@@ -222,6 +238,25 @@ public class DashboardFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void showAedPanel(String location, String access, String hours) {
+        binding.aedInfoPanel.setVisibility(View.VISIBLE);
+        binding.txtAedTitle.setText(location);
+        binding.txtAedInfo.setText(
+                getString(R.string.aed_access) + ": " + access + "\n" +
+                        getString(R.string.aed_hours) + ": " + hours
+        );
+
+        // Slide up animation
+        binding.aedInfoPanel.setTranslationY(300f);
+        binding.aedInfoPanel.setAlpha(0f);
+        binding.aedInfoPanel.animate()
+                .translationY(0f)
+                .alpha(1f)
+                .setDuration(300)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .start();
     }
 
     private void updateAedByZoom() {
@@ -269,8 +304,8 @@ public class DashboardFragment extends Fragment {
                 requireActivity().runOnUiThread(() -> {
                     currentRoute = new Polyline();
                     currentRoute.setPoints(points);
-                    currentRoute.setColor(0xFF0066FF);
-                    currentRoute.setWidth(9f);
+                    currentRoute.setColor(0xFF007AFF);  // Blue accent color
+                    currentRoute.setWidth(12f);
 
                     mapView.getOverlays().add(currentRoute);
                     mapView.invalidate();
@@ -299,7 +334,7 @@ public class DashboardFragment extends Fragment {
 
     private void highlightSlovakia() {
         Polygon mask = new Polygon();
-        mask.setFillColor(0x99000000);
+        mask.setFillColor(0x66000000);  // Slightly lighter overlay
         mask.setStrokeWidth(0f);
 
         List<GeoPoint> outer = new ArrayList<>();
