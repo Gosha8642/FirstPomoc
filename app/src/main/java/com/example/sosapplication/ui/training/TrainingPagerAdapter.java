@@ -40,6 +40,17 @@ public class TrainingPagerAdapter
         holder.image.setImageResource(step.imageRes);
         holder.title.setText(step.title);
         holder.description.setText(step.description);
+        
+        // Set step badge
+        String stepText = "Step " + (position + 1);
+        holder.stepBadge.setText(stepText);
+        
+        // Hide swipe hint on last page
+        if (position == getItemCount() - 1) {
+            holder.swipeHint.setVisibility(View.GONE);
+        } else {
+            holder.swipeHint.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -52,12 +63,16 @@ public class TrainingPagerAdapter
         ImageView image;
         TextView title;
         TextView description;
+        TextView stepBadge;
+        TextView swipeHint;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.imageStep);
             title = itemView.findViewById(R.id.textTitle);
             description = itemView.findViewById(R.id.textDescription);
+            stepBadge = itemView.findViewById(R.id.stepBadge);
+            swipeHint = itemView.findViewById(R.id.swipeHint);
         }
     }
 }
