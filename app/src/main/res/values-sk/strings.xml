@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SOS Aplikácia</string>
-    <string name="app_name_display">AED Slovensko</string>
+    <string name="app_name_display">FirstPomoc</string>
     <string name="app_subtitle">Nájdi najbližší defibrilátor</string>
 
     <string name="title_home">Domov</string>
@@ -38,5 +38,4 @@
     <string name="aed_access">Prístup</string>
     <string name="aed_hours">Hodiny</string>
     <string name="aed_location">Umiestnenie</string>
-
 </resources>

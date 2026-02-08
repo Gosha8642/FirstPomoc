@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SOS Application</string>
-    <string name="app_name_display">AED Slovakia</string>
+    <string name="app_name_display">FirstPomoc</string>
     <string name="app_subtitle">Find the nearest defibrillator</string>
 
     <string name="title_home">Home</string>
@@ -18,7 +18,7 @@
 
     <!-- TRAINING STEPS -->
     <string name="training_step_1_title">Check Consciousness</string>
-    <string name="training_step_1_desc">Check if the person responds. Gently shake the shoulders and ask loudly: \"Are you okay?\" Look for breathing – chest movement, breathing sounds.</string>
+    <string name="training_step_1_desc">Check if the person responds. Gently shake the shoulders and ask loudly: "Are you okay?" Look for breathing – chest movement, breathing sounds.</string>
 
     <string name="training_step_2_title">Call Emergency</string>
     <string name="training_step_2_desc">If the person does not respond and is not breathing, call 112 immediately. If someone is nearby, ask them for help.</string>
