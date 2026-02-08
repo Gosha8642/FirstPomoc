@@ -43,23 +43,23 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupAnimations() {
-        // Pulse animation for SOS button
+        // Pulse animation for SOS button - BIGGER radius animation
         View pulseRing = binding.pulseRing;
         
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(pulseRing, "scaleX", 1f, 1.15f);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(pulseRing, "scaleY", 1f, 1.15f);
-        ObjectAnimator alpha = ObjectAnimator.ofFloat(pulseRing, "alpha", 0.3f, 0f);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(pulseRing, "scaleX", 1f, 1.3f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(pulseRing, "scaleY", 1f, 1.3f);
+        ObjectAnimator alpha = ObjectAnimator.ofFloat(pulseRing, "alpha", 0.4f, 0f);
         
         pulseAnimator = new AnimatorSet();
         pulseAnimator.playTogether(scaleX, scaleY, alpha);
-        pulseAnimator.setDuration(1500);
+        pulseAnimator.setDuration(1800);
         pulseAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         pulseAnimator.addListener(new android.animation.AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(android.animation.Animator animation) {
                 pulseRing.setScaleX(1f);
                 pulseRing.setScaleY(1f);
-                pulseRing.setAlpha(0.3f);
+                pulseRing.setAlpha(0.4f);
                 if (pulseAnimator != null) {
                     pulseAnimator.start();
                 }
@@ -140,19 +140,26 @@ public class HomeFragment extends Fragment {
 
     private void updateLanguageSelection() {
         String currentLang = LocaleHelper.getLanguage(requireContext());
+        boolean isDark = ThemeHelper.isDarkMode(requireContext());
         
-        // Reset all buttons
-        updateLangButton(binding.btnEN, "en".equals(currentLang));
-        updateLangButton(binding.btnSK, "sk".equals(currentLang));
-        updateLangButton(binding.btnUA, "uk".equals(currentLang));
+        // Reset all buttons with correct theme colors
+        updateLangButton(binding.btnEN, "en".equals(currentLang), isDark);
+        updateLangButton(binding.btnSK, "sk".equals(currentLang), isDark);
+        updateLangButton(binding.btnUA, "uk".equals(currentLang), isDark);
     }
     
-    private void updateLangButton(TextView button, boolean isSelected) {
+    private void updateLangButton(TextView button, boolean isSelected, boolean isDarkTheme) {
         button.setSelected(isSelected);
         if (isSelected) {
+            // Selected button always white text (on primary color background)
             button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
         } else {
-            button.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary_light));
+            // Unselected: black text on light theme, white text on dark theme
+            if (isDarkTheme) {
+                button.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+            } else {
+                button.setTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary_light));
+            }
         }
     }
 
