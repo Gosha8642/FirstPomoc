@@ -1,7 +1,8 @@
-# AED Slovakia - Product Requirements Document
+# FirstPomoc - Product Requirements Document
 
 ## Overview
 Android application for finding AED (Automated External Defibrillators) in Slovakia with first aid training functionality.
+**App Name**: FirstPomoc
 
 ## Architecture
 - **Platform**: Native Android (Java)
