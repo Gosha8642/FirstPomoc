@@ -5,7 +5,7 @@
 
     <string name="title_home">Головна</string>
     <string name="title_dashboard">Мапа</string>
-    <string name="title_notifications">Профіль</string>
+    <string name="title_notifications">Сповіщення</string>
 
     <string name="training">Тренування</string>
     <string name="training_button">Навчання першої допомоги</string>
@@ -15,6 +15,13 @@
     <string name="theme_toggle">Змінити тему</string>
     <string name="navigate_to_aed">Прокласти маршрут до AED</string>
     <string name="swipe_hint">Проведи для продовження</string>
+    
+    <!-- SOS -->
+    <string name="sos_active">SOS сигнал активний</string>
+    <string name="sos_cancelled">SOS сигнал скасовано</string>
+    <string name="sos_sent_notification">SOS надіслано! Користувачі поблизу отримують сповіщення.</string>
+    <string name="location_not_available">Місцезнаходження недоступне. Увімкніть GPS.</string>
+    <string name="cancel">Скасувати</string>
 
     <!-- Training Selection -->
     <string name="training_select_title">Навчання першої допомоги</string>

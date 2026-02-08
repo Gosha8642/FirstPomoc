@@ -5,7 +5,7 @@
 
     <string name="title_home">Domov</string>
     <string name="title_dashboard">Mapa</string>
-    <string name="title_notifications">Profil</string>
+    <string name="title_notifications">Upozornenia</string>
 
     <string name="training">Tréning</string>
     <string name="training_button">Školenie prvej pomoci</string>
@@ -15,6 +15,13 @@
     <string name="theme_toggle">Prepnúť tému</string>
     <string name="navigate_to_aed">Navigovať k AED</string>
     <string name="swipe_hint">Posuň pre pokračovanie</string>
+    
+    <!-- SOS -->
+    <string name="sos_active">SOS signál aktívny</string>
+    <string name="sos_cancelled">SOS signál zrušený</string>
+    <string name="sos_sent_notification">SOS odoslané! Používatelia v okolí sú upozorňovaní.</string>
+    <string name="location_not_available">Poloha nie je dostupná. Zapnite GPS.</string>
+    <string name="cancel">Zrušiť</string>
 
     <!-- Training Selection -->
     <string name="training_select_title">Školenie prvej pomoci</string>
