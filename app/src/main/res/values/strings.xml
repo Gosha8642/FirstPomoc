@@ -5,7 +5,7 @@
 
     <string name="title_home">Home</string>
     <string name="title_dashboard">Map</string>
-    <string name="title_notifications">Profile</string>
+    <string name="title_notifications">Notifications</string>
 
     <string name="training">Training</string>
     <string name="training_button">First Aid Training</string>
@@ -15,6 +15,13 @@
     <string name="theme_toggle">Toggle theme</string>
     <string name="navigate_to_aed">Navigate to AED</string>
     <string name="swipe_hint">Swipe to continue</string>
+    
+    <!-- SOS -->
+    <string name="sos_active">SOS Signal Active</string>
+    <string name="sos_cancelled">SOS Signal Cancelled</string>
+    <string name="sos_sent_notification">SOS sent! Nearby users are being notified.</string>
+    <string name="location_not_available">Location not available. Please enable GPS.</string>
+    <string name="cancel">Cancel</string>
 
     <!-- Training Selection -->
     <string name="training_select_title">First Aid Training</string>
@@ -36,7 +43,7 @@
     <string name="training_fracture_title">Fractures</string>
     <string name="training_fracture_desc">How to immobilize broken bones</string>
 
-    <!-- CPR STEPS (No Breathing) -->
+    <!-- CPR STEPS -->
     <string name="training_step_1_title">Check Consciousness</string>
     <string name="training_step_1_desc">Check if the person responds. Gently shake the shoulders and ask loudly: \"Are you okay?\" Look for breathing – chest movement, breathing sounds.</string>
 
