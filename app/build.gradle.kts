@@ -35,19 +35,31 @@ android {
 }
 
 dependencies {
-
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("org.osmdroid:osmdroid-android:6.1.16")
-    implementation("org.osmdroid:osmdroid-android:6.1.14")
-    implementation("org.osmdroid:osmdroid-mapsforge:6.1.14")
-    implementation("com.google.android.gms:play-services-location:21.0.1")
+    // AndroidX Core
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
+    implementation("androidx.cardview:cardview:1.0.0")
+    
+    // RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    
+    // Lifecycle
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
+    
+    // Navigation
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    
+    // OSMDroid Map
+    implementation("org.osmdroid:osmdroid-android:6.1.16")
+    
+    // Location Services
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
