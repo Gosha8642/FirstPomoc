@@ -65,11 +65,16 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupClickListeners() {
-        // SOS Button
+        // SOS Button - Navigate to map with SOS mode
         binding.btnSOS.setOnClickListener(v -> {
             animateButtonPress(v);
+            
+            // Create bundle with SOS flag
+            Bundle args = new Bundle();
+            args.putBoolean("sos_triggered", true);
+            
             NavController navController = NavHostFragment.findNavController(this);
-            navController.navigate(R.id.navigation_dashboard);
+            navController.navigate(R.id.navigation_dashboard, args);
         });
 
         // Training Button
