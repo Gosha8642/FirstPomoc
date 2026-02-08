@@ -16,7 +16,27 @@
     <string name="navigate_to_aed">Navigovať k AED</string>
     <string name="swipe_hint">Posuň pre pokračovanie</string>
 
-    <!-- TRAINING STEPS -->
+    <!-- Training Selection -->
+    <string name="training_select_title">Školenie prvej pomoci</string>
+    <string name="training_select_subtitle">Vyber si tému na učenie</string>
+
+    <!-- Training Categories -->
+    <string name="training_cpr_title">KPR - Nedýcha</string>
+    <string name="training_cpr_desc">Čo robiť keď osoba nedýcha</string>
+    
+    <string name="training_choking_title">Dusenie</string>
+    <string name="training_choking_desc">Pomoc pri dusení jedlom alebo predmetom</string>
+    
+    <string name="training_bleeding_title">Silné krvácanie</string>
+    <string name="training_bleeding_desc">Ako zastaviť silné krvácanie z rán</string>
+    
+    <string name="training_burns_title">Popáleniny</string>
+    <string name="training_burns_desc">Prvá pomoc pri tepelných a chemických popáleninách</string>
+    
+    <string name="training_fracture_title">Zlomeniny</string>
+    <string name="training_fracture_desc">Ako znehybniť zlomené kosti</string>
+
+    <!-- CPR STEPS -->
     <string name="training_step_1_title">Skontroluj vedomie</string>
     <string name="training_step_1_desc">Skontroluj, či osoba reaguje. Jemne zatras ramenom a nahlas sa opýtaj: „Si v poriadku?" Sleduj, či dýcha – pohyb hrudníka, zvuky dýchania.</string>
 
@@ -32,6 +52,47 @@
     <string name="training_step_5_title">Pokračuj v resuscitácii</string>
     <string name="training_step_5_desc">Pokračuj v cykle 30 stlačení a 2 vdychov, kým nepríde záchranka alebo osoba nezačne dýchať.</string>
 
+    <!-- CHOKING STEPS -->
+    <string name="choking_step_1_title">Zhodnoť situáciu</string>
+    <string name="choking_step_1_desc">Opýtaj sa: „Dusíš sa?" Ak nemôže hovoriť, kašľať ani dýchať, potrebuje okamžitú pomoc. Pri vážnom stave volaj 112.</string>
+    
+    <string name="choking_step_2_title">Údery do chrbta</string>
+    <string name="choking_step_2_desc">Postav sa za osobu. Daj 5 ostrých úderov medzi lopatky dlaňou ruky.</string>
+    
+    <string name="choking_step_3_title">Heimlichov manéver</string>
+    <string name="choking_step_3_desc">Ak údery do chrbta nepomáhajú, vykonaj 5 stlačení brucha. Postav sa za osobu, polož päsť nad pupok, prudko zatlač dovnútra a nahor.</string>
+
+    <!-- BLEEDING STEPS -->
+    <string name="bleeding_step_1_title">Pritlač na ranu</string>
+    <string name="bleeding_step_1_desc">Pevne pritlač na ranu čistou látkou alebo obväzom. Udržuj stály tlak aspoň 10 minút.</string>
+    
+    <string name="bleeding_step_2_title">Zdvihni končatinu</string>
+    <string name="bleeding_step_2_desc">Ak je to možné, zdvihni zranenú končatinu nad úroveň srdca a udržuj tlak. Pomáha to znížiť prietok krvi k rane.</string>
+    
+    <string name="bleeding_step_3_title">Obväz pevne</string>
+    <string name="bleeding_step_3_desc">Keď krvácanie spomalí, prilož pevný obväz na ranu. Ak krv presakuje, neodstraňuj prvú vrstvu – pridaj ďalšie.</string>
+
+    <!-- BURNS STEPS -->
+    <string name="burns_step_1_title">Schladzuj popáleninu</string>
+    <string name="burns_step_1_desc">Drž popálené miesto pod vlažnou (nie studenou) tečúcou vodou aspoň 10–20 minút. Nepoužívaj ľad ani veľmi studenú vodu.</string>
+    
+    <string name="burns_step_2_title">Odstráň sťahujúce predmety</string>
+    <string name="burns_step_2_desc">Opatrne odstráň šperky, hodinky alebo tesné oblečenie v blízkosti popáleniny pred opuchom. Neodstraňuj oblečenie prilepené k rane.</string>
+    
+    <string name="burns_step_3_title">Zakry a chráň</string>
+    <string name="burns_step_3_desc">Zakry popáleninu sterilným obväzom alebo potravinovou fóliou. Nenanášaj maslo, zubnú pastu ani iné domáce prostriedky.</string>
+
+    <!-- FRACTURE STEPS -->
+    <string name="fracture_step_1_title">Nehýb zranením</string>
+    <string name="fracture_step_1_desc">Nehýb zranenou končatinou. Znehybni ju v polohe, v akej sa nachádza. Pohyb môže spôsobiť ďalšie poškodenie a bolesť.</string>
+    
+    <string name="fracture_step_2_title">Podopri zranenie</string>
+    <string name="fracture_step_2_desc">Použi vypchávky (oblečenie, deky) na podporu a ochranu zraneného miesta. Vytvor dlahu z tuhých materiálov ak si vyškolený.</string>
+    
+    <string name="fracture_step_3_title">Prilož ľad a čakaj</string>
+    <string name="fracture_step_3_desc">Prilož ľad zabalený v látke na zníženie opuchu. Zavolaj záchranku. Nedávaj jedlo ani pitie pre prípad operácie.</string>
+
+    <!-- AED Info -->
     <string name="aed_title">Defibrilátor (AED)</string>
     <string name="aed_distance">Vzdialenosť</string>
     <string name="aed_unknown">Žiadne informácie</string>

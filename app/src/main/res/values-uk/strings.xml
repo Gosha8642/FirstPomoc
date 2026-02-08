@@ -16,7 +16,27 @@
     <string name="navigate_to_aed">Прокласти маршрут до AED</string>
     <string name="swipe_hint">Проведи для продовження</string>
 
-    <!-- TRAINING STEPS -->
+    <!-- Training Selection -->
+    <string name="training_select_title">Навчання першої допомоги</string>
+    <string name="training_select_subtitle">Обери тему для вивчення</string>
+
+    <!-- Training Categories -->
+    <string name="training_cpr_title">СЛР - Не дихає</string>
+    <string name="training_cpr_desc">Що робити коли людина не дихає</string>
+    
+    <string name="training_choking_title">Задуха</string>
+    <string name="training_choking_desc">Допомога при задусі їжею або предметом</string>
+    
+    <string name="training_bleeding_title">Сильна кровотеча</string>
+    <string name="training_bleeding_desc">Як зупинити сильну кровотечу з ран</string>
+    
+    <string name="training_burns_title">Опіки</string>
+    <string name="training_burns_desc">Перша допомога при термічних та хімічних опіках</string>
+    
+    <string name="training_fracture_title">Переломи</string>
+    <string name="training_fracture_desc">Як знерухомити зламані кістки</string>
+
+    <!-- CPR STEPS -->
     <string name="training_step_1_title">Перевір свідомість</string>
     <string name="training_step_1_desc">Перевір, чи людина реагує. Обережно струси за плечі та голосно запитай: «Ви в порядку?» Слідкуй за диханням – рух грудної клітки, звуки дихання.</string>
 
@@ -32,6 +52,47 @@
     <string name="training_step_5_title">Продовжуй СЛР</string>
     <string name="training_step_5_desc">Продовжуй цикли 30 натискань і 2 вдихів, доки не прибуде швидка допомога або людина не почне дихати.</string>
 
+    <!-- CHOKING STEPS -->
+    <string name="choking_step_1_title">Оціни ситуацію</string>
+    <string name="choking_step_1_desc">Запитай: «Ви задихаєтесь?» Якщо не може говорити, кашляти чи дихати, потрібна негайна допомога. При тяжкому стані дзвони 112.</string>
+    
+    <string name="choking_step_2_title">Удари по спині</string>
+    <string name="choking_step_2_desc">Стань позаду людини. Зроби 5 різких ударів між лопатками долонею.</string>
+    
+    <string name="choking_step_3_title">Прийом Геймліха</string>
+    <string name="choking_step_3_desc">Якщо удари по спині не допомагають, виконай 5 поштовхів у живіт. Стань позаду, постав кулак над пупком, різко натисни всередину і вгору.</string>
+
+    <!-- BLEEDING STEPS -->
+    <string name="bleeding_step_1_title">Притисни рану</string>
+    <string name="bleeding_step_1_desc">Міцно притисни до рани чисту тканину або бинт. Утримуй постійний тиск щонайменше 10 хвилин.</string>
+    
+    <string name="bleeding_step_2_title">Підніми кінцівку</string>
+    <string name="bleeding_step_2_desc">Якщо можливо, підніми поранену кінцівку вище рівня серця, утримуючи тиск. Це допомагає зменшити приплив крові до рани.</string>
+    
+    <string name="bleeding_step_3_title">Забинтуй міцно</string>
+    <string name="bleeding_step_3_desc">Коли кровотеча сповільниться, накладай щільну пов\'язку на рану. Якщо кров просочується, не знімай перший шар – додай ще.</string>
+
+    <!-- BURNS STEPS -->
+    <string name="burns_step_1_title">Охолоди опік</string>
+    <string name="burns_step_1_desc">Тримай обпечене місце під прохолодною (не холодною) проточною водою щонайменше 10–20 хвилин. Не використовуй лід чи дуже холодну воду.</string>
+    
+    <string name="burns_step_2_title">Зніми стискаючі речі</string>
+    <string name="burns_step_2_desc">Обережно зніми прикраси, годинники чи тісний одяг біля опіку до появи набряку. Не знімай одяг, що прилип до рани.</string>
+    
+    <string name="burns_step_3_title">Накрий та захисти</string>
+    <string name="burns_step_3_desc">Накрий опік стерильним бинтом або харчовою плівкою. Не наноси масло, зубну пасту чи інші домашні засоби.</string>
+
+    <!-- FRACTURE STEPS -->
+    <string name="fracture_step_1_title">Не рухай</string>
+    <string name="fracture_step_1_desc">Не рухай пошкоджену кінцівку. Знерухом її в тому положенні, в якому знайшов. Рух може спричинити більше пошкоджень і біль.</string>
+    
+    <string name="fracture_step_2_title">Підтримай травму</string>
+    <string name="fracture_step_2_desc">Використовуй м\'які матеріали (одяг, ковдри) для підтримки та захисту пошкодженого місця. Створи шину з твердих матеріалів якщо навчений.</string>
+    
+    <string name="fracture_step_3_title">Прикладай лід і чекай</string>
+    <string name="fracture_step_3_desc">Приклади лід, загорнутий у тканину, щоб зменшити набряк. Виклич швидку. Не давай їжу чи воду на випадок операції.</string>
+
+    <!-- AED Info -->
     <string name="aed_title">Дефібрилятор (AED)</string>
     <string name="aed_distance">Відстань</string>
     <string name="aed_unknown">Немає інформації</string>
