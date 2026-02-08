@@ -65,7 +65,7 @@ public class DashboardFragment extends Fragment {
     private final List<Marker> aedMarkers = new ArrayList<>();
 
     private static final int LOCATION_REQUEST = 101;
-    private static final int ROUTE_COLOR = 0xFF34C759;
+    private static final int ROUTE_COLOR = 0xFF007AFF; // Blue color
     private static final double SOS_RADIUS_METERS = 200;
 
     private final double north = 49.6138;
