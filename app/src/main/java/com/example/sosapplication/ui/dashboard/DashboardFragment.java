@@ -4,7 +4,9 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -48,16 +50,22 @@ public class DashboardFragment extends Fragment {
 
     private MyLocationNewOverlay myLocationOverlay;
     private GeoPoint userLocationPoint;
+    private GeoPoint selectedAedPoint;
     private Polyline currentRoute;
 
     private final List<Marker> aedMarkers = new ArrayList<>();
 
     private static final int LOCATION_REQUEST = 101;
+    private static final int FAB_MARGIN_NORMAL = 180;
+    private static final int FAB_MARGIN_WITH_PANEL = 320;
 
     private final double north = 49.6138;
     private final double south = 47.7312;
     private final double east = 22.5657;
     private final double west = 16.8332;
+    
+    private float initialY;
+    private boolean isPanelVisible = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -116,9 +124,60 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // Navigate button - build route only when clicked
+        binding.btnNavigate.setOnClickListener(v -> {
+            if (userLocationPoint != null && selectedAedPoint != null) {
+                animateButtonPress(v);
+                buildRoute(userLocationPoint, selectedAedPoint);
+                zoomToUserAndAed(userLocationPoint, selectedAedPoint);
+            }
+        });
+
         binding.aedInfoPanel.setVisibility(View.GONE);
+        
+        // Setup swipe to dismiss on panel
+        setupPanelSwipeToDismiss();
 
         return root;
+    }
+    
+    private void setupPanelSwipeToDismiss() {
+        binding.aedInfoPanel.setOnTouchListener(new View.OnTouchListener() {
+            private float startY;
+            private float startTranslationY;
+            
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        startY = event.getRawY();
+                        startTranslationY = v.getTranslationY();
+                        return true;
+                        
+                    case MotionEvent.ACTION_MOVE:
+                        float deltaY = event.getRawY() - startY;
+                        if (deltaY > 0) { // Only allow swiping down
+                            v.setTranslationY(startTranslationY + deltaY);
+                        }
+                        return true;
+                        
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        float finalDeltaY = event.getRawY() - startY;
+                        if (finalDeltaY > 100) { // Threshold to dismiss
+                            hideAedPanel();
+                        } else {
+                            // Snap back
+                            v.animate()
+                                    .translationY(0f)
+                                    .setDuration(200)
+                                    .start();
+                        }
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void animateButtonPress(View view) {
@@ -216,15 +275,15 @@ public class DashboardFragment extends Fragment {
                 marker.setTitle(location);
 
                 marker.setOnMarkerClickListener((m, map) -> {
-                    if (userLocationPoint != null) {
-                        GeoPoint aed = m.getPosition();
-
-                        buildRoute(userLocationPoint, aed);
-                        zoomToUserAndAed(userLocationPoint, aed);
-
-                        // Show panel with animation
-                        showAedPanel(location, access, hours);
-                    }
+                    // Store selected AED position (don't build route yet)
+                    selectedAedPoint = m.getPosition();
+                    
+                    // Show panel with animation
+                    showAedPanel(location, access, hours);
+                    
+                    // Center on AED
+                    mapView.getController().animateTo(selectedAedPoint);
+                    
                     return true;
                 });
 
@@ -241,6 +300,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void showAedPanel(String location, String access, String hours) {
+        isPanelVisible = true;
         binding.aedInfoPanel.setVisibility(View.VISIBLE);
         binding.txtAedTitle.setText(location);
         binding.txtAedInfo.setText(
@@ -254,6 +314,56 @@ public class DashboardFragment extends Fragment {
         binding.aedInfoPanel.animate()
                 .translationY(0f)
                 .alpha(1f)
+                .setDuration(300)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .start();
+        
+        // Move FAB up when panel is shown
+        moveFabUp();
+    }
+    
+    private void hideAedPanel() {
+        isPanelVisible = false;
+        
+        // Slide down animation
+        binding.aedInfoPanel.animate()
+                .translationY(300f)
+                .alpha(0f)
+                .setDuration(250)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .withEndAction(() -> {
+                    binding.aedInfoPanel.setVisibility(View.GONE);
+                    binding.aedInfoPanel.setTranslationY(0f);
+                })
+                .start();
+        
+        // Move FAB back down
+        moveFabDown();
+        
+        // Clear selected AED
+        selectedAedPoint = null;
+        
+        // Remove route if exists
+        if (currentRoute != null) {
+            mapView.getOverlays().remove(currentRoute);
+            currentRoute = null;
+            mapView.invalidate();
+        }
+    }
+    
+    private void moveFabUp() {
+        // Animate FAB to move up
+        binding.btnMyLocation.animate()
+                .translationY(-140f)
+                .setDuration(300)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .start();
+    }
+    
+    private void moveFabDown() {
+        // Animate FAB back to original position
+        binding.btnMyLocation.animate()
+                .translationY(0f)
                 .setDuration(300)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
