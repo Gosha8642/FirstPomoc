@@ -1,0 +1,144 @@
+{
+  "project_name": "AED Slovakia - Emergency & Training App",
+  "design_philosophy": {
+    "core_concept": "Calm Urgency",
+    "description": "A minimalist, high-contrast interface that reduces cognitive load during emergencies while providing a friendly, engaging experience for training.",
+    "anti_patterns": [
+      "Standard Material Purple/Teal colors",
+      "Cluttered maps with small pins",
+      "Generic 'stack of buttons' layouts",
+      "Dry, text-heavy instruction screens"
+    ]
+  },
+  "color_palette": {
+    "light_theme": {
+      "primary": "#FF3B30",
+      "primary_variant": "#D32F2F",
+      "secondary": "#34C759",
+      "background": "#F2F2F7",
+      "surface": "#FFFFFF",
+      "error": "#B00020",
+      "on_primary": "#FFFFFF",
+      "on_secondary": "#FFFFFF",
+      "on_background": "#000000",
+      "on_surface": "#000000"
+    },
+    "dark_theme": {
+      "primary": "#FF453A",
+      "primary_variant": "#D32F2F",
+      "secondary": "#30D158",
+      "background": "#000000",
+      "surface": "#1C1C1E",
+      "error": "#CF6679",
+      "on_primary": "#000000",
+      "on_secondary": "#000000",
+      "on_background": "#FFFFFF",
+      "on_surface": "#FFFFFF"
+    },
+    "usage": {
+      "sos_button": "primary",
+      "aed_marker": "secondary",
+      "training_accent": "#007AFF",
+      "text_primary": "on_background",
+      "text_secondary": "#8E8E93"
+    }
+  },
+  "typography": {
+    "font_family": "sans-serif",
+    "styles": {
+      "display_large": {
+        "size": "48sp",
+        "weight": "bold",
+        "letter_spacing": "-0.02em"
+      },
+      "headline_medium": {
+        "size": "24sp",
+        "weight": "bold"
+      },
+      "body_large": {
+        "size": "18sp",
+        "weight": "normal"
+      },
+      "button_text": {
+        "size": "16sp",
+        "weight": "bold",
+        "letter_spacing": "0.05em",
+        "case": "uppercase"
+      }
+    }
+  },
+  "layout_guidelines": {
+    "spacing": {
+      "xs": "4dp",
+      "s": "8dp",
+      "m": "16dp",
+      "l": "24dp",
+      "xl": "32dp",
+      "xxl": "48dp"
+    },
+    "corner_radius": {
+      "card": "16dp",
+      "button": "12dp",
+      "sos_button": "50%"
+    },
+    "elevation": {
+      "card": "4dp",
+      "floating_button": "6dp",
+      "dialog": "24dp"
+    }
+  },
+  "components": {
+    "sos_button": {
+      "type": "Button",
+      "style": "Circular, Pulsing",
+      "size": "200dp",
+      "color": "primary",
+      "icon": "drawable/ic_sos_alert",
+      "animation": "Pulse (Scale 1.0 -> 1.1 infinite)"
+    },
+    "aed_card": {
+      "type": "CardView",
+      "style": "Floating Bottom Sheet",
+      "background": "surface",
+      "corner_radius": "16dp top-left, 16dp top-right",
+      "content": "Title (Bold), Distance (Accent), Navigate Button"
+    },
+    "language_toggle": {
+      "type": "MaterialButtonToggleGroup",
+      "style": "Outlined, Single Selection",
+      "location": "Home Fragment Top Right"
+    },
+    "theme_toggle": {
+      "type": "ImageButton",
+      "icon": "drawable/ic_theme_switch",
+      "location": "Home Fragment Top Left"
+    }
+  },
+  "animations": {
+    "transitions": {
+      "fragment_enter": "slide_in_right",
+      "fragment_exit": "slide_out_left",
+      "fragment_pop_enter": "slide_in_left",
+      "fragment_pop_exit": "slide_out_right"
+    },
+    "micro_interactions": {
+      "button_press": "Scale down 0.95",
+      "sos_pulse": "ObjectAnimator scaleX/scaleY"
+    }
+  },
+  "implementation_steps": [
+    "1. Update `res/values/colors.xml` with the new palette.",
+    "2. Update `res/values/themes.xml` to support DayNight (Dark Mode) and remove Action Bar.",
+    "3. Create `res/drawable/bg_sos_ripple.xml` for the SOS button effect.",
+    "4. Refactor `fragment_home.xml`: Use ConstraintLayout. Add Theme Toggle (ImageButton). Replace Language Buttons with ToggleGroup. Center SOS.",
+    "5. Refactor `fragment_dashboard.xml`: Use CoordinatorLayout. Add BottomSheetBehavior for AED info. Style the Search Bar.",
+    "6. Add `ObjectAnimator` in `HomeFragment.java` for the SOS pulse effect.",
+    "7. Implement Theme Switching logic in `MainActivity.java` using `AppCompatDelegate`."
+  ],
+  "assets_needed": [
+    "ic_theme_light.xml",
+    "ic_theme_dark.xml",
+    "ic_sos_alert.xml",
+    "ic_navigation_arrow.xml"
+  ]
+}
