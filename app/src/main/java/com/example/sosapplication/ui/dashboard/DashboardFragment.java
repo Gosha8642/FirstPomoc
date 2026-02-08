@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -65,6 +66,7 @@ public class DashboardFragment extends Fragment {
     private final double west = 16.8332;
     
     private boolean isPanelVisible = false;
+    private int originalFabBottomMargin = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -99,6 +101,10 @@ public class DashboardFragment extends Fragment {
 
         binding.btnMyLocation.bringToFront();
         binding.btnMyLocation.setZ(100f);
+        
+        // Save original FAB margin
+        FrameLayout.LayoutParams fabParams = (FrameLayout.LayoutParams) binding.btnMyLocation.getLayoutParams();
+        originalFabBottomMargin = fabParams.bottomMargin;
         
         initMyLocation();
         loadAedMarkers();
@@ -296,8 +302,12 @@ public class DashboardFragment extends Fragment {
                         getString(R.string.aed_hours) + ": " + hours
         );
 
+        // Measure panel height
+        binding.aedInfoPanel.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        final int panelHeight = binding.aedInfoPanel.getMeasuredHeight();
+
         // Slide up animation for panel
-        binding.aedInfoPanel.setTranslationY(300f);
+        binding.aedInfoPanel.setTranslationY(panelHeight);
         binding.aedInfoPanel.setAlpha(0f);
         binding.aedInfoPanel.animate()
                 .translationY(0f)
@@ -306,9 +316,12 @@ public class DashboardFragment extends Fragment {
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
         
-        // Move FAB up slightly
+        // Move FAB up by changing bottom margin
+        FrameLayout.LayoutParams fabParams = (FrameLayout.LayoutParams) binding.btnMyLocation.getLayoutParams();
+        int newMargin = originalFabBottomMargin + panelHeight + 16;
+        
         binding.btnMyLocation.animate()
-                .translationY(-100f)
+                .translationY(-(panelHeight + 16))
                 .setDuration(300)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
@@ -317,8 +330,11 @@ public class DashboardFragment extends Fragment {
     private void hideAedPanel() {
         isPanelVisible = false;
         
+        // Measure panel height for animation
+        final int panelHeight = binding.aedInfoPanel.getHeight();
+        
         binding.aedInfoPanel.animate()
-                .translationY(300f)
+                .translationY(panelHeight)
                 .alpha(0f)
                 .setDuration(250)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
