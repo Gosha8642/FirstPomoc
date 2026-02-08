@@ -2,7 +2,6 @@ package com.example.sosapplication.ui.dashboard;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,7 +29,6 @@ import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.Polygon;
 import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
@@ -40,7 +38,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -68,7 +65,6 @@ public class DashboardFragment extends Fragment {
     private final double west = 16.8332;
     
     private boolean isPanelVisible = false;
-    private int panelHeight = 0;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -103,9 +99,6 @@ public class DashboardFragment extends Fragment {
 
         binding.btnMyLocation.bringToFront();
         binding.btnMyLocation.setZ(100f);
-
-        // Add dark overlay for areas outside Slovakia
-        addSlovakiaMask();
         
         initMyLocation();
         loadAedMarkers();
@@ -144,59 +137,6 @@ public class DashboardFragment extends Fragment {
         setupPanelSwipeToDismiss();
 
         return root;
-    }
-    
-    private void addSlovakiaMask() {
-        // Create 4 dark rectangles around Slovakia to darken other countries
-        int darkColor = 0x99000000; // Semi-transparent black
-        
-        // Top rectangle (above Slovakia)
-        Polygon topMask = new Polygon();
-        topMask.setFillColor(darkColor);
-        topMask.setStrokeWidth(0f);
-        topMask.setPoints(Arrays.asList(
-            new GeoPoint(90, -180),
-            new GeoPoint(90, 180),
-            new GeoPoint(north + 0.5, 180),
-            new GeoPoint(north + 0.5, -180)
-        ));
-        mapView.getOverlays().add(topMask);
-        
-        // Bottom rectangle (below Slovakia)
-        Polygon bottomMask = new Polygon();
-        bottomMask.setFillColor(darkColor);
-        bottomMask.setStrokeWidth(0f);
-        bottomMask.setPoints(Arrays.asList(
-            new GeoPoint(south - 0.5, -180),
-            new GeoPoint(south - 0.5, 180),
-            new GeoPoint(-90, 180),
-            new GeoPoint(-90, -180)
-        ));
-        mapView.getOverlays().add(bottomMask);
-        
-        // Left rectangle (west of Slovakia)
-        Polygon leftMask = new Polygon();
-        leftMask.setFillColor(darkColor);
-        leftMask.setStrokeWidth(0f);
-        leftMask.setPoints(Arrays.asList(
-            new GeoPoint(north + 0.5, -180),
-            new GeoPoint(north + 0.5, west - 0.5),
-            new GeoPoint(south - 0.5, west - 0.5),
-            new GeoPoint(south - 0.5, -180)
-        ));
-        mapView.getOverlays().add(leftMask);
-        
-        // Right rectangle (east of Slovakia)
-        Polygon rightMask = new Polygon();
-        rightMask.setFillColor(darkColor);
-        rightMask.setStrokeWidth(0f);
-        rightMask.setPoints(Arrays.asList(
-            new GeoPoint(north + 0.5, east + 0.5),
-            new GeoPoint(north + 0.5, 180),
-            new GeoPoint(south - 0.5, 180),
-            new GeoPoint(south - 0.5, east + 0.5)
-        ));
-        mapView.getOverlays().add(rightMask);
     }
     
     private void setupPanelSwipeToDismiss() {
@@ -366,7 +306,7 @@ public class DashboardFragment extends Fragment {
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();
         
-        // Move FAB up slightly (not too much)
+        // Move FAB up slightly
         binding.btnMyLocation.animate()
                 .translationY(-100f)
                 .setDuration(300)
@@ -446,7 +386,7 @@ public class DashboardFragment extends Fragment {
                 requireActivity().runOnUiThread(() -> {
                     currentRoute = new Polyline();
                     currentRoute.setPoints(points);
-                    currentRoute.setColor(ROUTE_COLOR);  // GREEN
+                    currentRoute.setColor(ROUTE_COLOR);
                     currentRoute.setWidth(10f);
 
                     mapView.getOverlays().add(currentRoute);
