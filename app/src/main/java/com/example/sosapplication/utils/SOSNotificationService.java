@@ -1,0 +1,162 @@
+package com.example.sosapplication.utils;
+
+import android.content.Context;
+import android.location.Location;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.example.sosapplication.R;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+public class SOSNotificationService {
+    
+    private static final String TAG = "SOSNotificationService";
+    private static final String ONESIGNAL_APP_ID = "0d2df905-4641-48e5-b9df-c684735e89f1";
+    private static final String ONESIGNAL_API_URL = "https://onesignal.com/api/v1/notifications";
+    
+    // REST API Key - should be stored securely on backend server in production
+    // For demo purposes, we're using it here but in production this should go through your backend
+    private static final String REST_API_KEY = "YOUR_REST_API_KEY"; // User needs to add this
+    
+    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    private static final int RADIUS_METERS = 200;
+    
+    private final Context context;
+    private final OkHttpClient client;
+    private final Handler mainHandler;
+    
+    public SOSNotificationService(Context context) {
+        this.context = context;
+        this.client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
+        this.mainHandler = new Handler(Looper.getMainLooper());
+    }
+    
+    /**
+     * Send SOS notification to all users within 200m radius
+     */
+    public void sendSOSAlert(Location location, SOSCallback callback) {
+        if (location == null) {
+            Log.e(TAG, "Location is null, cannot send SOS");
+            callback.onError("Location not available");
+            return;
+        }
+        
+        try {
+            // Build the notification payload
+            JSONObject payload = buildNotificationPayload(location);
+            
+            Log.d(TAG, "Sending SOS alert to users within " + RADIUS_METERS + "m");
+            Log.d(TAG, "Location: " + location.getLatitude() + ", " + location.getLongitude());
+            
+            RequestBody body = RequestBody.create(payload.toString(), JSON);
+            
+            Request request = new Request.Builder()
+                    .url(ONESIGNAL_API_URL)
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Authorization", "Basic " + REST_API_KEY)
+                    .post(body)
+                    .build();
+            
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e(TAG, "Failed to send SOS notification", e);
+                    mainHandler.post(() -> callback.onError(e.getMessage()));
+                }
+                
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String responseBody = response.body() != null ? response.body().string() : "";
+                    
+                    if (response.isSuccessful()) {
+                        Log.d(TAG, "SOS notification sent successfully: " + responseBody);
+                        mainHandler.post(() -> callback.onSuccess(responseBody));
+                    } else {
+                        Log.e(TAG, "SOS notification failed: " + response.code() + " - " + responseBody);
+                        mainHandler.post(() -> callback.onError("Server error: " + response.code()));
+                    }
+                }
+            });
+            
+        } catch (Exception e) {
+            Log.e(TAG, "Error building SOS notification", e);
+            callback.onError(e.getMessage());
+        }
+    }
+    
+    private JSONObject buildNotificationPayload(Location location) throws Exception {
+        JSONObject payload = new JSONObject();
+        
+        payload.put("app_id", ONESIGNAL_APP_ID);
+        
+        // Target users within 200m radius using location filter
+        JSONArray filters = new JSONArray();
+        JSONObject locationFilter = new JSONObject();
+        locationFilter.put("field", "location");
+        locationFilter.put("radius", RADIUS_METERS);
+        locationFilter.put("lat", location.getLatitude());
+        locationFilter.put("long", location.getLongitude());
+        filters.put(locationFilter);
+        payload.put("filters", filters);
+        
+        // Notification content
+        JSONObject headings = new JSONObject();
+        headings.put("en", "🚨 SOS Alert Nearby!");
+        headings.put("sk", "🚨 SOS Výstraha v blízkosti!");
+        headings.put("uk", "🚨 SOS Сигнал поруч!");
+        payload.put("headings", headings);
+        
+        JSONObject contents = new JSONObject();
+        contents.put("en", "Someone nearby needs help! Tap to see location.");
+        contents.put("sk", "Niekto v blízkosti potrebuje pomoc! Kliknutím zobrazíte polohu.");
+        contents.put("uk", "Комусь поруч потрібна допомога! Натисніть, щоб побачити місцезнаходження.");
+        payload.put("contents", contents);
+        
+        // Custom data for the app to handle
+        JSONObject data = new JSONObject();
+        data.put("type", "SOS_ALERT");
+        data.put("sender_lat", location.getLatitude());
+        data.put("sender_long", location.getLongitude());
+        data.put("timestamp", System.currentTimeMillis());
+        data.put("radius", RADIUS_METERS);
+        payload.put("data", data);
+        
+        // High priority for emergency
+        payload.put("priority", 10);
+        payload.put("ttl", 3600); // 1 hour TTL
+        
+        // Android specific settings
+        JSONObject android = new JSONObject();
+        android.put("sound", "default");
+        android.put("led_color", "FFFF0000"); // Red LED
+        payload.put("android", android);
+        
+        return payload;
+    }
+    
+    /**
+     * Callback interface for SOS notification results
+     */
+    public interface SOSCallback {
+        void onSuccess(String response);
+        void onError(String error);
+    }
+}
