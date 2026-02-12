@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.onesignal.OneSignal;
 import com.onesignal.debug.LogLevel;
+import com.example.sosapplication.services.NotificationClickHandler;
 
 public class SOSApplication extends Application {
     
@@ -28,6 +29,9 @@ public class SOSApplication extends Application {
         
         // Initialize OneSignal with context
         OneSignal.initWithContext(this, ONESIGNAL_APP_ID);
+        
+        // Add notification click listener
+        OneSignal.getNotifications().addClickListener(new NotificationClickHandler(this));
         
         // Request notification permission for Android 13+
         OneSignal.getNotifications().requestPermission(true, null);
