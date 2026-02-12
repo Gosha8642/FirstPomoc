@@ -27,6 +27,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sosapplication.R;
 import com.example.sosapplication.databinding.FragmentDashboardBinding;
+import com.example.sosapplication.utils.SOSNotificationService;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
