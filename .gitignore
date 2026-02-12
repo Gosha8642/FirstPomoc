@@ -41,3 +41,14 @@ secrets.properties
 # Environment files
 *.env
 *.env.*
+<<<<<<< HEAD
+=======
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+>>>>>>> 552105aaafdee6c893057b00592ed0e3ca2a863a
