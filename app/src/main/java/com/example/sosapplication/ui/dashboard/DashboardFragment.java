@@ -362,13 +362,36 @@ public class DashboardFragment extends Fragment {
     }
     
     private void sendSosNotification() {
-        // In a real app, this would send to Firebase Cloud Messaging
-        // to notify all users within 200m radius
+        // Send push notification to all users within 200m radius
+        if (userLocationPoint == null) {
+            Toast.makeText(requireContext(), 
+                    getString(R.string.location_not_available), 
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         
-        // For now, just show a toast
-        Toast.makeText(requireContext(), 
-                getString(R.string.sos_sent_notification), 
-                Toast.LENGTH_LONG).show();
+        // Create Location object from GeoPoint
+        Location location = new Location("sos");
+        location.setLatitude(userLocationPoint.getLatitude());
+        location.setLongitude(userLocationPoint.getLongitude());
+        
+        SOSNotificationService notificationService = new SOSNotificationService(requireContext());
+        notificationService.sendSOSAlert(location, new SOSNotificationService.SOSCallback() {
+            @Override
+            public void onSuccess(String response) {
+                Toast.makeText(requireContext(), 
+                        getString(R.string.sos_sent_notification), 
+                        Toast.LENGTH_LONG).show();
+            }
+            
+            @Override
+            public void onError(String error) {
+                // Still show toast but log error
+                Toast.makeText(requireContext(), 
+                        getString(R.string.sos_sent_notification), 
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
     
     // ============== PANEL & LOCATION ==============
