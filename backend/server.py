@@ -7,6 +7,10 @@ import httpx
 import math
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Initialize FastAPI app
 app = FastAPI(
