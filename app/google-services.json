@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "944807263581",
+    "project_id": "firstpomoc",
+    "storage_bucket": "firstpomoc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:944807263581:android:b39877b411694c646cfcb4",
+        "android_client_info": {
+          "package_name": "com.example.sosapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2ZRFflMSvzPgeS-km6FPy2SmpCentajk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
