@@ -2,3 +2,14 @@
 plugins {
     alias(libs.plugins.android.application) apply false
 }
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath("gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.14.0, 0.99.99]")
+    }
+}
