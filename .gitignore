@@ -52,3 +52,7 @@ secrets.properties
 *.env
 *.env.*
 >>>>>>> 552105aaafdee6c893057b00592ed0e3ca2a863a
+-e 
+# Environment files
+*.env
+*.env.*
