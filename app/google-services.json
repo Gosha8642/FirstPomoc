@@ -7,15 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:944807263581:android:b39877b411694c646cfcb4",
+        "mobilesdk_app_id": "1:944807263581:android:placeholder",
         "android_client_info": {
           "package_name": "com.example.sosapplication"
         }
       },
-      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD2ZRFflMSvzPgeS-km6FPy2SmpCentajk"
+          "current_key": ""
         }
       ],
       "services": {
