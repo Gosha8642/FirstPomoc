@@ -13,8 +13,9 @@ public class SOSApplication extends Application {
     // OneSignal App ID
     public static final String ONESIGNAL_APP_ID = "0d2df905-4641-48e5-b9df-c684735e89f1";
     
-    // Backend API URL - replace with your actual backend URL
-    public static final String BACKEND_API_URL = "https://sos-backend.example.com/api";
+    // Backend API URL - Update this with your deployed backend URL
+    // For testing: use your Emergent preview URL
+    public static final String BACKEND_API_URL = "https://018eb327-ad33-4da9-8f84-e3b8ca930097.preview.emergentagent.com/api";
     
     @Override
     public void onCreate() {
