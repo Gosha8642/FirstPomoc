@@ -59,6 +59,12 @@ dependencies {
     // Location Services
     implementation("com.google.android.gms:play-services-location:21.0.1")
     
+    // OneSignal Push Notifications
+    implementation("com.onesignal:OneSignal:[5.1.0, 5.99.99]")
+    
+    // OkHttp for API calls
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
