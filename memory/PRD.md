@@ -10,6 +10,7 @@ Android application for finding AED (Automated External Defibrillators) in Slova
 - **Target SDK**: 36
 - **Map**: OSMDroid with OpenStreetMap tiles
 - **Routing**: OSRM (Open Source Routing Machine)
+- **Push Notifications**: OneSignal SDK (App ID: 0d2df905-4641-48e5-b9df-c684735e89f1)
 
 ## Core Features
 1. **Home Screen**
@@ -33,10 +34,19 @@ Android application for finding AED (Automated External Defibrillators) in Slova
 ## What's Been Implemented
 
 ### Latest Changes (December 2025)
+- [x] **New App Icon** - Custom SOS/AED map icon
+- [x] **OneSignal Push Notifications** - Integrated for 200m radius SOS alerts
+- [x] **SOS Banner Redesign** - Wider horizontal rectangle with rounded corners (280dp width)
 - [x] Changed map route color from green to blue (#007AFF)
-- [x] Lowered SOS cancellation banner (marginTop: 48dp → 100dp)
 - [x] Fixed .gitignore with proper API key security setup
-- [x] Created local.properties template for future API keys
+- [x] Created local.properties template for API keys
+
+### OneSignal Integration Files
+- `SOSApplication.java` - Application class with OneSignal init
+- `SOSNotificationService.java` - Service for sending SOS alerts to nearby users
+- `MainActivity.java` - Updated with notification permission handling
+- `build.gradle.kts` - Added OneSignal and OkHttp dependencies
+- `AndroidManifest.xml` - Added POST_NOTIFICATIONS and BACKGROUND_LOCATION permissions
 
 ### UI/UX Redesign (2024-02-08)
 - [x] New color palette: Emergency Red (#FF3B30), Safety Green (#34C759), Accent Blue (#007AFF)
@@ -97,7 +107,7 @@ Android application for finding AED (Automated External Defibrillators) in Slova
 - [ ] AED data update mechanism
 
 ### P1 (Important)
-- [ ] Push notifications via OneSignal (paused by user, App ID saved: 0d2df905-4641-48e5-b9df-c684735e89f1)
+- [x] Push notifications via OneSignal - IMPLEMENTED (needs REST API key from user)
 - [ ] FAB animation improvement (recurring issue - needs programmatic listener)
 - [ ] Offline map support
 - [ ] Distance calculation to AED
@@ -107,6 +117,10 @@ Android application for finding AED (Automated External Defibrillators) in Slova
 - [ ] AED reporting/updating
 - [ ] Favorites/bookmarks
 - [ ] Training completion tracking
+
+## Setup Required
+**OneSignal REST API Key**: User needs to add their REST API key to `SOSNotificationService.java` or implement backend proxy for security.
+- Get key from: OneSignal Dashboard -> Settings -> Keys & IDs -> REST API Key
 
 ## Known Issues
 - **FAB Animation**: The location button animation when AED panel appears has been inconsistent. Consider implementing BottomSheetCallback with programmatic translationY updates.
