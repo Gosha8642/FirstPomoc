@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.onesignal.androidsdk.onesignal-gradle-plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
