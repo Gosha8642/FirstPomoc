@@ -7,10 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-<<<<<<< HEAD
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
-=======
->>>>>>> 552105aaafdee6c893057b00592ed0e3ca2a863a
 
 
     <application

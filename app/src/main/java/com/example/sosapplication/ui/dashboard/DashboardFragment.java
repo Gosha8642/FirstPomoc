@@ -27,7 +27,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sosapplication.R;
 import com.example.sosapplication.databinding.FragmentDashboardBinding;
-import com.example.sosapplication.utils.SOSNotificationService;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -360,72 +359,44 @@ public class DashboardFragment extends Fragment {
         }
         sosWaves.clear();
     }
-    
+
     private void sendSosNotification() {
-<<<<<<< HEAD
-        // Send push notification to all users within 200m radius
-=======
         // Send SOS alert to backend which will notify nearby users via OneSignal
->>>>>>> 552105aaafdee6c893057b00592ed0e3ca2a863a
         if (userLocationPoint == null) {
-            Toast.makeText(requireContext(), 
-                    getString(R.string.location_not_available), 
+            Toast.makeText(requireContext(),
+                    getString(R.string.location_not_available),
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        
-<<<<<<< HEAD
-        // Create Location object from GeoPoint
-        Location location = new Location("sos");
-        location.setLatitude(userLocationPoint.getLatitude());
-        location.setLongitude(userLocationPoint.getLongitude());
-        
-        SOSNotificationService notificationService = new SOSNotificationService(requireContext());
-        notificationService.sendSOSAlert(location, new SOSNotificationService.SOSCallback() {
-            @Override
-            public void onSuccess(String response) {
-                Toast.makeText(requireContext(), 
-                        getString(R.string.sos_sent_notification), 
-                        Toast.LENGTH_LONG).show();
-            }
-            
-            @Override
-            public void onError(String error) {
-                // Still show toast but log error
-                Toast.makeText(requireContext(), 
-                        getString(R.string.sos_sent_notification), 
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-=======
+
         // Create location object for the service
         android.location.Location location = new android.location.Location("sos");
         location.setLatitude(userLocationPoint.getLatitude());
         location.setLongitude(userLocationPoint.getLongitude());
-        
+
         // Get backend URL from Application class
         String backendUrl = com.example.sosapplication.SOSApplication.BACKEND_API_URL;
-        
-        com.example.sosapplication.services.SOSAlertService sosService = 
+
+        com.example.sosapplication.services.SOSAlertService sosService =
                 new com.example.sosapplication.services.SOSAlertService(requireContext(), backendUrl);
-        
+
         // First update our location
         sosService.updateLocation(location, null);
-        
+
         // Then trigger SOS alert
-        sosService.triggerSOSAlert(location, 200, 
+        sosService.triggerSOSAlert(location, 200,
                 getString(R.string.sos_sent_notification),
                 new com.example.sosapplication.services.SOSAlertService.SOSCallback() {
                     @Override
                     public void onSuccess(int recipientsCount) {
                         if (getContext() != null) {
-                            String message = recipientsCount > 0 
+                            String message = recipientsCount > 0
                                     ? "SOS отправлен " + recipientsCount + " пользователям рядом"
                                     : "SOS активен (пользователей рядом не найдено)";
                             Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
                         }
                     }
-                    
+
                     @Override
                     public void onError(String error) {
                         if (getContext() != null) {
@@ -436,7 +407,6 @@ public class DashboardFragment extends Fragment {
                         }
                     }
                 });
->>>>>>> 552105aaafdee6c893057b00592ed0e3ca2a863a
     }
     
     // ============== PANEL & LOCATION ==============

@@ -61,21 +61,14 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
     
     // OneSignal Push Notifications
-<<<<<<< HEAD
-    implementation("com.onesignal:OneSignal:[5.1.0, 5.99.99]")
-=======
     implementation("com.onesignal:OneSignal:[5.0.0, 5.99.99]")
->>>>>>> 552105aaafdee6c893057b00592ed0e3ca2a863a
     
     // OkHttp for API calls
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     
-<<<<<<< HEAD
-=======
     // Gson for JSON
     implementation("com.google.code.gson:gson:2.10.1")
     
->>>>>>> 552105aaafdee6c893057b00592ed0e3ca2a863a
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
