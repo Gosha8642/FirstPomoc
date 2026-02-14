@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.onesignal.notifications.INotificationClickEvent;
 import com.onesignal.notifications.INotificationClickListener;
+import com.onesignal.notifications.INotificationReceivedEvent;
+import com.onesignal.notifications.INotificationWillDisplayEvent;
 
 import org.json.JSONObject;
 
@@ -28,19 +30,23 @@ public class NotificationClickHandler implements INotificationClickListener {
         try {
             // Get notification data
             JSONObject data = event.getNotification().getAdditionalData();
-            String actionId = event.getResult().getActionId();
+            String actionId = null;
+            
+            if (event.getResult() != null) {
+                actionId = event.getResult().getActionId();
+            }
             
             if (data != null) {
-                String alertType = data.optString("alert_type", "");
+                String alertType = data.optString("type", data.optString("alert_type", ""));
                 String senderId = data.optString("sender_id", "");
-                String latitude = data.optString("latitude", "");
-                String longitude = data.optString("longitude", "");
+                String latitude = data.optString("sender_lat", data.optString("latitude", ""));
+                String longitude = data.optString("sender_long", data.optString("longitude", ""));
                 
                 Log.d(TAG, "Alert type: " + alertType);
                 Log.d(TAG, "Sender: " + senderId);
-                Log.d(TAG, "Action: " + actionId);
+                Log.d(TAG, "Location: " + latitude + ", " + longitude);
                 
-                if ("sos".equals(alertType)) {
+                if ("SOS_ALERT".equals(alertType) || "sos".equals(alertType)) {
                     // Handle SOS alert click
                     handleSOSAlertClick(senderId, latitude, longitude, actionId);
                 } else if ("sos_cancelled".equals(alertType)) {
@@ -50,12 +56,12 @@ public class NotificationClickHandler implements INotificationClickListener {
             }
             
             // Handle action button clicks
-            if ("help_coming".equals(actionId)) {
-                Log.d(TAG, "User responded: Help is coming");
-                // TODO: Send response to backend
-            } else if ("false_alarm".equals(actionId)) {
-                Log.d(TAG, "User responded: False alarm");
-                // TODO: Send response to backend
+            if (actionId != null) {
+                if ("help_coming".equals(actionId)) {
+                    Log.d(TAG, "User responded: Help is coming");
+                } else if ("false_alarm".equals(actionId)) {
+                    Log.d(TAG, "User responded: False alarm");
+                }
             }
             
         } catch (Exception e) {
