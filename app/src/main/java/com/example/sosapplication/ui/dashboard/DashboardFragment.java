@@ -361,52 +361,41 @@ public class DashboardFragment extends Fragment {
     }
 
     private void sendSosNotification() {
-        // Send SOS alert to backend which will notify nearby users via OneSignal
         if (userLocationPoint == null) {
-            Toast.makeText(requireContext(),
-                    getString(R.string.location_not_available),
+            Toast.makeText(requireContext(), 
+                    getString(R.string.location_not_available), 
                     Toast.LENGTH_SHORT).show();
             return;
         }
-
-        // Create location object for the service
+        
+        // Create location object
         android.location.Location location = new android.location.Location("sos");
         location.setLatitude(userLocationPoint.getLatitude());
         location.setLongitude(userLocationPoint.getLongitude());
-
-        // Get backend URL from Application class
-        String backendUrl = com.example.sosapplication.SOSApplication.BACKEND_API_URL;
-
-        com.example.sosapplication.services.SOSAlertService sosService =
-                new com.example.sosapplication.services.SOSAlertService(requireContext(), backendUrl);
-
-        // First update our location
-        sosService.updateLocation(location, null);
-
-        // Then trigger SOS alert
-        sosService.triggerSOSAlert(location, 200,
-                getString(R.string.sos_sent_notification),
-                new com.example.sosapplication.services.SOSAlertService.SOSCallback() {
-                    @Override
-                    public void onSuccess(int recipientsCount) {
-                        if (getContext() != null) {
-                            String message = recipientsCount > 0
-                                    ? "SOS отправлен " + recipientsCount + " пользователям рядом"
-                                    : "SOS активен (пользователей рядом не найдено)";
-                            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
-                        }
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        if (getContext() != null) {
-                            // Still show SOS is active locally even if network failed
-                            Toast.makeText(requireContext(), 
-                                    "SOS активен локально", 
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        
+        // Use SOSNotificationService from utils
+        com.example.sosapplication.utils.SOSNotificationService sosService = 
+                new com.example.sosapplication.utils.SOSNotificationService(requireContext());
+        
+        sosService.sendSOSAlert(location, new com.example.sosapplication.utils.SOSNotificationService.SOSCallback() {
+            @Override
+            public void onSuccess(String response) {
+                if (getContext() != null) {
+                    Toast.makeText(requireContext(), 
+                            getString(R.string.sos_sent_notification), 
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+            
+            @Override
+            public void onError(String error) {
+                if (getContext() != null) {
+                    Toast.makeText(requireContext(), 
+                            "SOS активен локально", 
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
     
     // ============== PANEL & LOCATION ==============
