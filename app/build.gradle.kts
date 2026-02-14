@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.onesignal.androidsdk.onesignal-gradle-plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -61,7 +62,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
     
     // OneSignal Push Notifications
-    implementation("com.onesignal:OneSignal:[5.0.0, 5.99.99]")
+    implementation("com.onesignal:OneSignal:[5.1.0, 5.99.99]")
     
     // OkHttp for API calls
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
