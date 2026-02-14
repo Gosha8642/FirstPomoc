@@ -20,13 +20,13 @@ public class SOSApplication extends Application {
         try {
             // Enable verbose logging for debugging
             OneSignal.getDebug().setLogLevel(LogLevel.VERBOSE);
-
+            
             // Initialize OneSignal
             OneSignal.initWithContext(this, ONESIGNAL_APP_ID);
-
+            
             // Request notification permission for Android 13+
             OneSignal.getNotifications().requestPermission(true, null);
-
+            
             Log.d(TAG, "OneSignal initialized successfully");
         } catch (Exception e) {
             Log.e(TAG, "Error initializing OneSignal", e);
