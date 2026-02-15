@@ -24,6 +24,9 @@ public class SOSApplication extends Application {
             // Initialize OneSignal
             OneSignal.initWithContext(this, ONESIGNAL_APP_ID);
             
+            // Enable location tracking for geofenced notifications
+            OneSignal.getLocation().setShared(true);
+            
             // Request notification permission for Android 13+
             OneSignal.getNotifications().requestPermission(true, null);
             
