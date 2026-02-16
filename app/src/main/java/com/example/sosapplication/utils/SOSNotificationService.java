@@ -25,7 +25,7 @@ public class SOSNotificationService {
     private static final String TAG = "SOSNotificationService";
     private static final String ONESIGNAL_APP_ID = "0d2df905-4641-48e5-b9df-c684735e89f1";
     private static final String ONESIGNAL_API_URL = "https://onesignal.com/api/v1/notifications";
-    private static final String REST_API_KEY = "os_v2_app_buw7sbkgifeoloo7y2chgxuj6f5tizxmm3bu4vekj5hhn7qglpuj4elri73by2wwyr4cqcncxe3aqerec3bayvtalhareydiulowpla";
+    private static final String REST_API_KEY = "os_v2_app_buw7sbkgifeoloo7y2chgxuj6ghr5bjaleguyeevcv5hl4lhrwi2wgcv32o7b6uxqutlbsmy55ee3kzhywtmbgh6qhf2nnupdjlu2yy";
 
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
